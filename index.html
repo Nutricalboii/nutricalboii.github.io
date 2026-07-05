@@ -1034,7 +1034,8 @@ footer {
 @media(max-width:768px){
   .hero h1 { font-size: clamp(32px, 8vw, 48px); }
   .hero-sub { font-size: 14px; max-width: 100%; }
-  .hero-actions { flex-direction: column; }
+  .hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+  .hero-actions .btn-p { grid-column: span 2; }
   .hero-actions .btn { width: 100%; justify-content: center; padding: 12px 18px; }
   .tele { font-size: 11px; }
   .tele-row { padding: 9px 12px; }
