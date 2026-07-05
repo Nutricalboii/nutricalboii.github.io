@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaibhav Sharma — Systems Builder</title>
+  <meta name="description" content="Vaibhav Sharma is a CS student and systems builder from India. He builds Linux distributions, hardware control tools, AI ecosystems and open-source infrastructure — one layer at a time." />
+  <meta name="theme-color" content="#0e0e0f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="navbar" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" id="nav-logo-link">VS</a>
+      <ul class="nav-links" role="list">
+        <li><a href="#about"    class="nav-link">About</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#stack"    class="nav-link">Stack</a></li>
+        <li><a href="#terminal" class="nav-link">Terminal</a></li>
+        <li><a href="#contact"  class="nav-link">Contact</a></li>
+      </ul>
+      <a href="https://github.com/Nutricalboii" target="_blank" rel="noopener" class="nav-cta" id="nav-github-btn">GitHub ↗</a>
+      <button class="nav-burger" id="burger-btn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+      <a href="#about"    class="nav-mobile-link">About</a>
+      <a href="#projects" class="nav-mobile-link">Projects</a>
+      <a href="#stack"    class="nav-mobile-link">Stack</a>
+      <a href="#terminal" class="nav-mobile-link">Terminal</a>
+      <a href="#contact"  class="nav-mobile-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero" class="hero" aria-label="Introduction">
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-pre" id="hero-pre">Systems Builder · India</p>
+      <h1 class="hero-name" id="hero-name">
+        Vaibhav<br /><span class="hero-name-accent">Sharma</span>
+      </h1>
+      <p class="hero-tagline" id="hero-tagline">
+        I experiment where theory meets hardware.<br />
+        I build where failure is possible.<br />
+        I use AI as a tool — because systems that survive reality are never accidental.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary" id="hero-work-btn">See the work</a>
+        <a href="#terminal" class="btn-ghost" id="hero-terminal-btn">Open terminal</a>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <span class="scroll-line"></span>
+        <span class="scroll-text">scroll</span>
+      </div>
+    </div>
+
+    <!-- floating stat chips -->
+    <div class="hero-stats" aria-label="Quick stats">
+      <div class="stat-chip" id="stat-repos"><span class="stat-num">27</span><span class="stat-label">repos</span></div>
+      <div class="stat-chip" id="stat-projects"><span class="stat-num">6</span><span class="stat-label">releases (LOQ)</span></div>
+      <div class="stat-chip" id="stat-langs"><span class="stat-num">5+</span><span class="stat-label">languages</span></div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about" class="about section" aria-label="About Vaibhav">
+    <div class="container">
+      <div class="section-label">About</div>
+      <div class="about-grid">
+        <div class="about-left">
+          <h2 class="about-heading">
+            Not the best student in the class.<br />
+            <span class="accent">The one who shipped something real<br />before the semester ended.</span>
+          </h2>
+          <p class="about-body">
+            I'm Vaibhav — a Computer Science student based in India. I follow equity markets. I think about systems at 2am. I break things on purpose to see what holds.
+          </p>
+          <p class="about-body">
+            My real interest isn't software specifically — it's beautifully designed systems. Software just happens to be today's medium. Tomorrow it might be industrial design, mechanical engineering, or camera optics. The curiosity stays the same; the domain shifts.
+          </p>
+          <p class="about-body">
+            There's a longer vision underneath all of this — every project I build is open source by default, and one day they stop being separate tools and start becoming a coherent ecosystem. Not a product. Just systems that work together the way I think they should.
+          </p>
+          <div class="about-links">
+            <a href="https://github.com/Nutricalboii" target="_blank" rel="noopener" class="about-link" id="about-github-link">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/vaibsharma86" target="_blank" rel="noopener" class="about-link" id="about-linkedin-link">LinkedIn ↗</a>
+          </div>
+        </div>
+        <div class="about-right">
+          <div class="about-philosophy">
+            <h3 class="philosophy-title">Build Philosophy</h3>
+            <ul class="philosophy-list" role="list">
+              <li class="philosophy-item">
+                <span class="phi-icon">▸</span>
+                <div>
+                  <strong>Learn by shipping</strong>
+                  <p>Not by watching tutorials. Not by reading docs. By breaking things in production and understanding why.</p>
+                </div>
+              </li>
+              <li class="philosophy-item">
+                <span class="phi-icon">▸</span>
+                <div>
+                  <strong>Understand before optimizing</strong>
+                  <p>If you don't understand why something works, you won't understand why it broke.</p>
+                </div>
+              </li>
+              <li class="philosophy-item">
+                <span class="phi-icon">▸</span>
+                <div>
+                  <strong>Failure is data, not defeat</strong>
+                  <p>Dead ends are proof you explored. Most people hide them. I document mine.</p>
+                </div>
+              </li>
+              <li class="philosophy-item">
+                <span class="phi-icon">▸</span>
+                <div>
+                  <strong>AI is a tool. Thinking is still yours.</strong>
+                  <p>Autocomplete is not architecture. Intelligence is not outsourceable.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CURRENTLY BUILDING ─── -->
+  <section id="building" class="building section" aria-label="Currently building">
+    <div class="container">
+      <div class="section-label">Currently Building</div>
+      <h2 class="section-heading">Most people build features.<br /><span class="accent">I'm building a world.</span></h2>
+      <div class="ecosystem-map" aria-label="Project ecosystem">
+        <div class="eco-center">
+          <div class="eco-core" id="eco-core-node">
+            <span class="eco-core-label">Vaibhav OS</span>
+            <span class="eco-core-sub">Ecosystem</span>
+          </div>
+        </div>
+        <div class="eco-nodes">
+          <a href="#vaelix" class="eco-node" id="eco-vaelix">
+            <span class="eco-node-name">Vaelix OS</span>
+            <span class="eco-node-desc">The foundation</span>
+          </a>
+          <a href="#loq" class="eco-node" id="eco-loq">
+            <span class="eco-node-name">LOQ Control</span>
+            <span class="eco-node-desc">The hardware brain</span>
+          </a>
+          <a href="#scholar" class="eco-node" id="eco-scholar">
+            <span class="eco-node-name">ScholarSync</span>
+            <span class="eco-node-desc">Knowledge layer</span>
+          </a>
+          <a href="#android" class="eco-node" id="eco-android">
+            <span class="eco-node-name">Android Bring-Up</span>
+            <span class="eco-node-desc">System depth</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ─── -->
+  <section id="projects" class="projects section" aria-label="Projects">
+    <div class="container">
+      <div class="section-label">Projects</div>
+      <h2 class="section-heading">Case Studies</h2>
+      <p class="section-sub">Not cards. Not badges. What the problem was, why I approached it this way, what I learned, and what I'd change.</p>
+
+      <!-- LOQ Control Center -->
+      <article class="project-card" id="loq" aria-label="LOQ Control Center project">
+        <div class="project-header">
+          <div class="project-meta">
+            <span class="project-tag">Linux · Python · GTK4 · systemd</span>
+            <span class="project-status status-prod">Production · v2.0.2</span>
+          </div>
+          <a href="https://github.com/Nutricalboii/loq-control" target="_blank" rel="noopener" class="project-gh-link" id="loq-gh-link">GitHub ↗</a>
+        </div>
+        <h3 class="project-title">LOQ Control Center</h3>
+        <p class="project-subtitle">The Ultimate Hardware Control Suite for Lenovo LOQ Laptops on Linux.</p>
+        <div class="project-body">
+          <div class="project-story">
+            <div class="story-block">
+              <span class="story-label">The problem</span>
+              <p>Linux users with Lenovo LOQ laptops had no unified way to manage thermal profiles, GPU switching, or power limits. The options were fragmented scripts, high-risk sudo commands, or directly manipulating the Embedded Controller. Every mistake carried hardware-damage risk. The experience was unacceptable.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">The approach</span>
+              <p>Started as a GPU switching script written at midnight because Linux took something that should have worked and didn't. It evolved over 6 versioned releases into a production-grade orchestration platform: a systemd daemon, an adaptive thermal engine, a Polkit-gated privilege architecture that never needs full root, and a full GTK4 GUI with interactive 7-point fan curves rendered with Cairo.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">What I learned</span>
+              <p>Hardware management at the Linux kernel level — ACPI interfaces, Embedded Controller communication, sysfs power nodes. Security-first privilege escalation patterns with pkexec instead of raw sudo. GTK4 application design. The difference between a script that works once and software that other people can depend on.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">What I'd change</span>
+              <p>The initial architecture mixed UI logic with hardware interfaces. V2 separated them cleanly, but I'd start that way from day one. Also, user-facing error messages could be significantly better — most still surface raw hardware codes.</p>
+            </div>
+          </div>
+          <div class="project-aside">
+            <div class="project-stats-grid">
+              <div class="pstat"><span class="pstat-num">6</span><span class="pstat-desc">versioned releases</span></div>
+              <div class="pstat"><span class="pstat-num">40</span><span class="pstat-desc">commits</span></div>
+              <div class="pstat"><span class="pstat-num">7-pt</span><span class="pstat-desc">fan curve editor</span></div>
+              <div class="pstat"><span class="pstat-num">MIT</span><span class="pstat-desc">licensed</span></div>
+            </div>
+            <div class="project-features">
+              <h4>Key features</h4>
+              <ul role="list">
+                <li>Zero-sudo GUI via Polkit / pkexec</li>
+                <li>Adaptive thermal Policy Engine</li>
+                <li>Integrated/Hybrid/Dedicated GPU switching</li>
+                <li>CPU PL1/PL2 + GPU cTGP control</li>
+                <li>systemd daemon for boot automation</li>
+                <li>Hardware safety "deadman switch"</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ScholarSync -->
+      <article class="project-card" id="scholar" aria-label="ScholarSync project">
+        <div class="project-header">
+          <div class="project-meta">
+            <span class="project-tag">TypeScript · Python · Next.js · FastAPI · ChromaDB · Gemini</span>
+            <span class="project-status status-live">Live · Hackathon Winner</span>
+          </div>
+          <div class="project-links">
+            <a href="https://scholarsync-nutricalboii.vercel.app" target="_blank" rel="noopener" class="project-gh-link" id="scholar-live-link">Live ↗</a>
+            <a href="https://github.com/Nutricalboii/ScholarSync" target="_blank" rel="noopener" class="project-gh-link" id="scholar-gh-link">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">ScholarSync</h3>
+        <p class="project-subtitle">AI-powered "Second Brain" for students — breaking information silos through multimodal RAG.</p>
+        <div class="project-body">
+          <div class="project-story">
+            <div class="story-block">
+              <span class="story-label">The problem</span>
+              <p>Students drown in disconnected PDFs. Each document is an island. Drawing connections between chapters, textbooks, or subjects requires the kind of mental overhead that blocks actual understanding. Study tools existed, but none synthesized across an entire library simultaneously.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">The approach</span>
+              <p>Built for TechSprint Hackathon. Chose a fully decoupled architecture: Next.js 14 frontend, FastAPI backend, ChromaDB vector store. Gemini 2.0 Flash handles multi-document synthesis through RAG — taking a user's entire library and answering questions that cite specific files and page numbers. Interactive knowledge graphs visualize concept relationships. 3D CSS flashcard animations make active recall feel tactile rather than clinical.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">What I learned</span>
+              <p>Multimodal RAG pipeline design — chunking, embedding, semantic search, and structured JSON output from LLMs. How to make AI output feel trustworthy through citation rather than confident assertion. The performance tradeoffs between vector search accuracy and query latency.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">What I'd change</span>
+              <p>The graph rendering is good but could be more interactive — clicking a node should open an exploration panel, not just an AI dive. Also would add streaming responses from the start; the current batch approach feels slow on large queries.</p>
+            </div>
+          </div>
+          <div class="project-aside">
+            <div class="project-stats-grid">
+              <div class="pstat"><span class="pstat-num">85</span><span class="pstat-desc">commits</span></div>
+              <div class="pstat"><span class="pstat-num">3★</span><span class="pstat-desc">stars</span></div>
+              <div class="pstat"><span class="pstat-num">RAG</span><span class="pstat-desc">pipeline</span></div>
+              <div class="pstat"><span class="pstat-num">3D</span><span class="pstat-desc">flashcards</span></div>
+            </div>
+            <div class="project-features">
+              <h4>Key features</h4>
+              <ul role="list">
+                <li>Multi-document RAG with page-level citations</li>
+                <li>Interactive knowledge graph (concept nodes)</li>
+                <li>3D CSS flashcard active recall</li>
+                <li>Smart quiz generation with explanations</li>
+                <li>AI-generated structured learning paths</li>
+                <li>Gemini 2.0 Flash + text-embedding-004</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Android Bring-Up -->
+      <article class="project-card project-wip" id="android" aria-label="Android 13 bring-up project">
+        <div class="project-header">
+          <div class="project-meta">
+            <span class="project-tag">C · C++ · Shell · Android · Linux Kernel</span>
+            <span class="project-status status-wip">In Progress · Month 3</span>
+          </div>
+          <a href="https://github.com/Nutricalboii/android_device_motorola_potter" target="_blank" rel="noopener" class="project-gh-link" id="android-gh-link">GitHub ↗</a>
+        </div>
+        <h3 class="project-title">Android 13 Bring-Up — Moto G5 Plus</h3>
+        <p class="project-subtitle">LineageOS 20.0 bring-up on MSM8953 / Linux 3.18 kernel. Three months in. Still going. That's the point.</p>
+        <div class="project-body">
+          <div class="project-story">
+            <div class="story-block">
+              <span class="story-label">The problem</span>
+              <p>The Moto G5 Plus (codename: potter) runs a Qualcomm MSM8953 SoC on a Linux 3.18 kernel — over 8 years behind mainline. Getting Android 13 to boot on hardware that old means negotiating between an ancient vendor tree, a modern Android build system, and driver interfaces that simply didn't exist in 2017.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">The approach</span>
+              <p>Methodical layers: vendor blobs first, then kernel bring-up patches, then HAL-level interfaces. I've been building the device tree, vendor tree, kernel patches, and OrangeFox recovery tree in parallel. Current state: device boots to fastboot, system doesn't pass verified boot. The Halium overlay isn't yet trusted by the bootloader.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">What I'm learning</span>
+              <p>How the Android build system works at every layer — Soong, Make, Blueprint. How the kernel talks to HALs. How Treble-era abstractions fail on pre-Treble hardware. What "device can't be trusted" actually means at the bootloader level, and the four different ways to address it.</p>
+            </div>
+            <div class="story-block story-wip">
+              <span class="story-label">Currently blocked on</span>
+              <p>Bootloader trust chain. Exploring signature bypass via test keys, dm-verity disabling, and custom bootloader flash. This is the hard part — which is why I'm here.</p>
+            </div>
+          </div>
+          <div class="project-aside">
+            <div class="project-features">
+              <h4>Repos in this project</h4>
+              <ul role="list">
+                <li>android_device_motorola_potter (C++)</li>
+                <li>android_vendor_motorola_potter (Makefile)</li>
+                <li>android_kernel_motorola_msm8953 (C)</li>
+                <li>android_build_patches_potter (Shell)</li>
+                <li>orangefox_potter_tree (Makefile)</li>
+                <li>android13 (C++ — base porting work)</li>
+              </ul>
+            </div>
+            <div class="project-note">
+              <p>This project exists because I wanted to stop assuming and start knowing how the kernel actually talks to hardware. Three months in, I understand things about Android internals that no tutorial would have shown me.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Avora -->
+      <article class="project-card" id="avora-project" aria-label="Avora project">
+        <div class="project-header">
+          <div class="project-meta">
+            <span class="project-tag">TypeScript · Next.js · MongoDB · Prisma · FastAPI</span>
+            <span class="project-status status-live">Live</span>
+          </div>
+          <div class="project-links">
+            <a href="https://avora-eight.vercel.app" target="_blank" rel="noopener" class="project-gh-link" id="avora-live-link">Live ↗</a>
+            <a href="https://github.com/Nutricalboii/Avora" target="_blank" rel="noopener" class="project-gh-link" id="avora-gh-link">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">Avora</h3>
+        <p class="project-subtitle">Minimalist enterprise SaaS landing with a fully architected dashboard and AI microservice backend.</p>
+        <div class="project-body">
+          <div class="project-story">
+            <div class="story-block">
+              <span class="story-label">The approach</span>
+              <p>Decoupled architecture from the start: public-facing Next.js landing page pushing leads directly to Google Sheets via Apps Script (zero-config for launch), with a full enterprise dashboard on protected routes backed by MongoDB + Prisma. A separate Python FastAPI microservice scaffolded for future AI workloads. 59 commits. Deployed on Vercel.</p>
+            </div>
+            <div class="story-block">
+              <span class="story-label">What I learned</span>
+              <p>How to architect a product that can launch small and scale without rewriting. Next.js App Router Server Actions. The tradeoff between launch velocity and infrastructure debt. When Google Sheets is genuinely the right database for early-stage lead capture.</p>
+            </div>
+          </div>
+          <div class="project-aside">
+            <div class="project-stats-grid">
+              <div class="pstat"><span class="pstat-num">59</span><span class="pstat-desc">commits</span></div>
+              <div class="pstat"><span class="pstat-num">TS</span><span class="pstat-desc">95.9%</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Vaelix OS teaser -->
+      <article class="project-card project-horizon" id="vaelix" aria-label="Vaelix OS project">
+        <div class="project-header">
+          <div class="project-meta">
+            <span class="project-tag">Linux Distribution · In Development</span>
+            <span class="project-status status-horizon">Horizon</span>
+          </div>
+        </div>
+        <h3 class="project-title">Vaelix OS</h3>
+        <p class="project-subtitle">A Linux distribution that doesn't apologize for wanting to feel like premium hardware. Not a reskin. A full system with its own identity, its own performance logic, its own battery intelligence.</p>
+        <div class="project-body">
+          <div class="project-story">
+            <div class="story-block">
+              <span class="story-label">The vision</span>
+              <p>The kind of OS that knows what it is. Vaelix is the foundation layer of a larger personal ecosystem — everything else eventually runs on top of it. LOQ Control Center becomes its hardware brain. ADYA becomes its intelligence layer. ScholarSync lives inside it. Not a product. Not a startup. Systems that work together the way I think they should.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ─── STACK ─── -->
+  <section id="stack" class="stack section" aria-label="Technical stack">
+    <div class="container">
+      <div class="section-label">Stack</div>
+      <h2 class="section-heading">The Workbench</h2>
+      <p class="section-sub">Not a skill list. The tools I actually reach for, and why.</p>
+      <div class="stack-grid">
+
+        <div class="stack-group" id="stack-systems">
+          <h3 class="stack-group-title">Systems & OS</h3>
+          <div class="stack-items">
+            <div class="stack-item"><span class="stack-icon">🐧</span><span class="stack-name">Linux</span><span class="stack-note">Daily driver, research platform</span></div>
+            <div class="stack-item"><span class="stack-icon">⚙️</span><span class="stack-name">systemd</span><span class="stack-note">Daemon architecture</span></div>
+            <div class="stack-item"><span class="stack-icon">🔒</span><span class="stack-name">Polkit / pkexec</span><span class="stack-note">Privilege security</span></div>
+            <div class="stack-item"><span class="stack-icon">📱</span><span class="stack-name">Android AOSP</span><span class="stack-note">Device tree bring-up</span></div>
+            <div class="stack-item"><span class="stack-icon">🔧</span><span class="stack-name">GTK4</span><span class="stack-note">Native Linux UI</span></div>
+          </div>
+        </div>
+
+        <div class="stack-group" id="stack-languages">
+          <h3 class="stack-group-title">Languages</h3>
+          <div class="stack-items">
+            <div class="stack-item"><span class="stack-icon">🐍</span><span class="stack-name">Python</span><span class="stack-note">Systems tooling, AI backends</span></div>
+            <div class="stack-item"><span class="stack-icon">🔷</span><span class="stack-name">TypeScript</span><span class="stack-note">Full-stack web</span></div>
+            <div class="stack-item"><span class="stack-icon">⚡</span><span class="stack-name">C / C++</span><span class="stack-note">Kernel, Android device trees</span></div>
+            <div class="stack-item"><span class="stack-icon">☕</span><span class="stack-name">Java</span><span class="stack-note">Android, academic projects</span></div>
+            <div class="stack-item"><span class="stack-icon">🐚</span><span class="stack-name">Shell / Bash</span><span class="stack-note">Automation, build scripts</span></div>
+          </div>
+        </div>
+
+        <div class="stack-group" id="stack-web">
+          <h3 class="stack-group-title">Web & AI</h3>
+          <div class="stack-items">
+            <div class="stack-item"><span class="stack-icon">▲</span><span class="stack-name">Next.js</span><span class="stack-note">App Router, Server Actions</span></div>
+            <div class="stack-item"><span class="stack-icon">🚀</span><span class="stack-name">FastAPI</span><span class="stack-note">Python microservices</span></div>
+            <div class="stack-item"><span class="stack-icon">🧠</span><span class="stack-name">Google Gemini</span><span class="stack-note">LLM integration, RAG</span></div>
+            <div class="stack-item"><span class="stack-icon">🗄️</span><span class="stack-name">ChromaDB</span><span class="stack-note">Vector store</span></div>
+            <div class="stack-item"><span class="stack-icon">🍃</span><span class="stack-name">MongoDB + Prisma</span><span class="stack-note">Database layer</span></div>
+          </div>
+        </div>
+
+        <div class="stack-group" id="stack-tools">
+          <h3 class="stack-group-title">Tools & Infra</h3>
+          <div class="stack-items">
+            <div class="stack-item"><span class="stack-icon">🐳</span><span class="stack-name">Docker</span><span class="stack-note">Container architecture</span></div>
+            <div class="stack-item"><span class="stack-icon">🌊</span><span class="stack-name">Git</span><span class="stack-note">Version control, workflow</span></div>
+            <div class="stack-item"><span class="stack-icon">▲</span><span class="stack-name">Vercel</span><span class="stack-note">Deployment</span></div>
+            <div class="stack-item"><span class="stack-icon">💻</span><span class="stack-name">VS Code</span><span class="stack-note">Primary editor</span></div>
+            <div class="stack-item"><span class="stack-icon">🐉</span><span class="stack-name">Lenovo LOQ</span><span class="stack-note">Hardware + daily machine</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TERMINAL ─── -->
+  <section id="terminal" class="terminal-section section" aria-label="Interactive terminal">
+    <div class="container">
+      <div class="section-label">Easter Egg</div>
+      <h2 class="section-heading">Open a terminal.<br /><span class="accent">Type something.</span></h2>
+      <p class="section-sub">Try: <code>whoami</code> · <code>ls</code> · <code>cat about.txt</code> · <code>neofetch</code> · <code>help</code></p>
+      <div class="terminal-window" id="terminal-window" role="application" aria-label="Interactive terminal emulator">
+        <div class="terminal-titlebar" aria-hidden="true">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">vaibhav@portfolio:~</span>
+        </div>
+        <div class="terminal-body" id="terminal-body" aria-live="polite" aria-atomic="false">
+          <div class="terminal-output" id="terminal-output">
+            <div class="t-line t-system">Welcome to vaibhav's portfolio terminal. Type <span class="t-cmd">help</span> to see available commands.</div>
+          </div>
+          <div class="terminal-input-row">
+            <span class="t-prompt" aria-hidden="true">vaibhav@portfolio:~$ </span>
+            <input
+              type="text"
+              id="terminal-input"
+              class="t-input"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-label="Terminal input"
+              placeholder="type a command..."
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact" class="contact section" aria-label="Contact">
+    <div class="container">
+      <div class="section-label">Contact</div>
+      <h2 class="section-heading">Let's talk.<br /><span class="accent">Preferably about hard problems.</span></h2>
+      <p class="contact-body">
+        I'm open to internships, collaborations, interesting projects, and conversations about systems design, Linux, AI infrastructure, or anything that doesn't have an obvious answer.
+      </p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/vaibsharma86" target="_blank" rel="noopener" class="contact-link" id="contact-linkedin">
+          <span class="contact-link-icon">in</span>
+          <span class="contact-link-text">
+            <strong>LinkedIn</strong>
+            <span>vaibsharma86</span>
+          </span>
+        </a>
+        <a href="https://github.com/Nutricalboii" target="_blank" rel="noopener" class="contact-link" id="contact-github">
+          <span class="contact-link-icon">gh</span>
+          <span class="contact-link-text">
+            <strong>GitHub</strong>
+            <span>Nutricalboii</span>
+          </span>
+        </a>
+      </div>
+      <blockquote class="contact-quote" aria-label="Personal quote">
+        "I experiment where theory meets hardware, build where failure is possible, and use AI as a tool — because systems that survive reality are never accidental."
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-left">Vaibhav Sharma · India · <time datetime="2026">2026</time></p>
+        <p class="footer-right">
+          <a href="https://github.com/Nutricalboii" target="_blank" rel="noopener" id="footer-github">GitHub</a>
+          ·
+          <a href="https://www.linkedin.com/in/vaibsharma86" target="_blank" rel="noopener" id="footer-linkedin">LinkedIn</a>
+        </p>
+      </div>
+      <p class="footer-built">Built with intention. Open source by default.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
