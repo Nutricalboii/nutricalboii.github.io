@@ -2,35 +2,42 @@
 
 A highly interactive, zero-dependency, phosphor-themed developer portfolio showcasing systems engineering, kernels, custom distro builds, and full-stack web applications.
 
-👉 **Live Site:** [Nutricalboii.github.io](https://Nutricalboii.github.io) (or host it anywhere directly as a single static index.html)
+**Live Site:** [Nutricalboii.github.io](https://Nutricalboii.github.io)
 
-## 🛠️ Features Included
+## Features
 
-- **Systemd Boot Animation:** Custom-tailored systemd-style unit boot sequencing.
-- **Interactive Terminal:** An execution environment simulating a Linux terminal with working commands (`help`, `ls`, `cd`, `cat`, `pwd`, `neofetch`, `git log`, `ps aux`, `tree`, tab-completion, and command history).
-- **Draggable Fan Curve Editor:** Fully interactive, Cairo-mode canvas fan curve editor mapped across temperature/RPM nodes (from LOQ Control Center spec).
-- **Git Object Model Explorer:** Real client-side SHA-1 git blob computation (`blob {len}\0{content}`) to inspect git hash-object structures.
-- **Round-Robin CPU Scheduler:** Real-time simulation of process scheduler with quantum slice visualizations and interactive step triggers.
-- **Diagnostics Drawer Subpages:** Clean, digital Diagnostic drawer overlays that slide-in from the right with detailed project walkthroughs and interactive elements.
-- **Ctrl+K Command Palette:** System-wide keyboard search and navigate overlay to jump between views and trigger actions dynamically.
-- **Live Telemetry:** Connects to GitHub API to pull live follower and repository counts dynamically.
+- **Systemd Boot Animation:** Custom-tailored systemd-style unit boot sequencing
+- **Interactive Terminal:** Linux terminal emulator with `help`, `ls`, `cd`, `cat`, `neofetch`, `git log`, `ps aux`, `tree`, tab-completion, and command history
+- **Draggable Fan Curve Editor:** Interactive Cairo-mode canvas fan curve editor mapped across temperature/RPM nodes
+- **Git Object Model Explorer:** Real client-side SHA-1 git blob computation
+- **Round-Robin CPU Scheduler:** Real-time simulation with quantum slice visualizations
+- **Diagnostics Drawer Subpages:** Slide-in overlays with detailed project walkthroughs
+- **Ctrl+K Command Palette:** System-wide keyboard search and navigation
+- **Live Telemetry:** GitHub API integration for follower and repository counts
 
-## 📁 Repository Structure
+## Accessibility
+
+- Skip navigation link
+- ARIA labels on all interactive elements
+- Focus trapping in modals/overlays
+- Keyboard-navigable throughout
+- Respects `prefers-reduced-motion`
+
+## How to Run
 
 ```bash
-.
-├── index.html         # Main portfolio entrypoint (fully self-contained)
-├── index_old.html     # Old structure backup
-└── README.md          # Project documentation
+# Open directly in any browser:
+xdg-open index.html
 ```
 
-## 🚀 How to Run Locally
+## Structure
 
-Since this prototype is fully client-side and optimized with zero dependencies, you can open it directly in any browser:
-
-```bash
-# Double click index.html or open via terminal:
-xdg-open index.html
+```
+.
+├── index.html              # Main portfolio (self-contained)
+├── index_old.html          # Legacy backup
+├── LICENSE                 # MIT License
+└── README.md               # This file
 ```
 
 Licensed under the MIT License.

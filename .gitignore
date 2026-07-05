@@ -18,7 +18,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# System backups
+# Old files / backups
 index_old.html
 vaibhav-portfolio.html
 vaibhav-portfolio-spec.md
+
+# Generated assets
+og-image.png

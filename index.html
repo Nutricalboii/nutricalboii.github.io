@@ -4,8 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vaibhav Sharma — Systems Engineer</title>
-<meta name="description" content="Full-stack + systems developer. Kernels, boot processes, and production — not just components.">
+<meta name="description" content="Vaibhav Sharma — systems builder. Linux distros, hardware reverse-engineering, Android bring-up. I build the layer most developers never touch.">
+<meta name="theme-color" content="#090908">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://nutricalboii.github.io/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vaibhav Sharma — Systems Engineer">
+<meta property="og:description" content="Vaibhav Sharma — systems builder. Linux distros, hardware reverse-engineering, Android bring-up. I build the layer most developers never touch.">
+<meta property="og:image" content="https://nutricalboii.github.io/og-image.png">
+<meta property="og:url" content="https://nutricalboii.github.io/">
+<meta property="og:site_name" content="Vaibhav Sharma Portfolio">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vaibhav Sharma — Systems Engineer">
+<meta name="twitter:description" content="Vaibhav Sharma — systems builder. Linux distros, hardware reverse-engineering, Android bring-up. I build the layer most developers never touch.">
+<meta name="twitter:image" content="https://nutricalboii.github.io/og-image.png">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Vaibhav Sharma",
+  "url": "https://nutricalboii.github.io/",
+  "jobTitle": "Systems Builder",
+  "description": "Linux distros, hardware reverse-engineering, Android bring-up. I build the layer most developers never touch.",
+  "affiliation": { "@type": "Organization", "name": "DIT University" },
+  "sameAs": [
+    "https://github.com/Nutricalboii",
+    "https://linkedin.com/in/vaibsharma86"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════
@@ -244,6 +280,17 @@ nav.scrolled { box-shadow: 0 1px 0 var(--line2), 0 4px 24px rgba(0,0,0,.4); }
   border-radius: var(--r); transition: .15s; background: var(--bg2);
 }
 .navcta:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-bg); }
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 4px;
+  cursor: pointer; padding: 6px; background: none; border: none;
+}
+.nav-hamburger span {
+  display: block; width: 18px; height: 1.5px; background: var(--dim);
+  transition: transform .2s, opacity .2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(3px, 4px); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(3px, -4px); }
 
 /* ═══════════════════════════════════════════
    PAGES
@@ -946,14 +993,27 @@ footer {
   .int-grid { grid-template-columns: 1fr; }
   .sgrid { grid-template-columns: 1fr; }
   .readme-stats { grid-template-columns: repeat(2,1fr); }
-  .navlinks { display: none; }
   .cicd-grid { grid-template-columns: 1fr; gap: 12px; }
+  .navlinks { display: none; }
+  .navlinks.open {
+    display: flex; flex-direction: column;
+    position: fixed; top: 58px; left: 0; right: 0;
+    background: rgba(9,9,8,.97); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0; z-index: 199;
+    animation: mobileNavIn .2s ease;
+  }
+  @keyframes mobileNavIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .navlinks.open a { padding: 12px 28px; font-size: 13px; }
+  .nav-hamburger { display: flex; }
 }
 @media(max-width:600px){
   .hero h1 { font-size: 36px; }
   nav { padding: 0 16px; }
   .wrap, .wide { padding: 0 16px; }
   #subpage-overlay { max-width: 100%; }
+  .tele { font-size: 11px; }
+  .readme-stats { grid-template-columns: 1fr 1fr; }
 }
 @media(prefers-reduced-motion: reduce){
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -962,14 +1022,17 @@ footer {
 </head>
 <body>
 
+<!-- SKIP NAV -->
+<a href="#main-content" class="skip-nav" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;padding:8px 16px;background:var(--amber);color:#1a1206;font-family:var(--mono);font-size:12px;text-decoration:none;border-radius:var(--r);">Skip to content</a>
+
 <!-- BOOT -->
-<div id="boot">
+<div id="boot" aria-hidden="true">
   <div id="bootlines"></div>
   <div id="boot-skip">skip [esc]</div>
 </div>
 
 <!-- COMMAND PALETTE -->
-<div id="palette" role="dialog" aria-label="Command palette">
+<div id="palette" role="dialog" aria-label="Command palette" aria-modal="true">
   <div class="pal-box">
     <div class="pal-input-row">
       <span>⌘</span>
@@ -981,38 +1044,42 @@ footer {
 </div>
 
 <!-- NAV -->
-<nav id="nav">
-  <div class="brand" onclick="nav('/')">vaibhav@sharma <span class="pulse"></span></div>
-  <div class="navlinks" id="navlinks">
-    <a href="#/" data-r="/"><span class="nn">01</span> INDEX</a>
-    <a href="#/work" data-r="/work"><span class="nn">02</span> WORK</a>
-    <a href="#/stack" data-r="/stack"><span class="nn">03</span> STACK</a>
-    <a href="#/terminal" data-r="/terminal"><span class="nn">04</span> TERMINAL</a>
-    <a href="#/internals" data-r="/internals"><span class="nn">05</span> INTERNALS</a>
-    <a href="#/log" data-r="/log"><span class="nn">06</span> LOG</a>
-    <a href="#/contact" data-r="/contact"><span class="nn">07</span> CONTACT</a>
+<nav id="nav" aria-label="Primary navigation">
+  <div class="brand" onclick="nav('/')" tabindex="0" role="link" aria-label="Go to homepage" onkeydown="if(event.key==='Enter')nav('/')">vaibhav@sharma <span class="pulse" aria-hidden="true"></span></div>
+  <div class="navlinks" id="navlinks" role="menubar">
+    <a href="#/" data-r="/" role="menuitem"><span class="nn" aria-hidden="true">01</span> INDEX</a>
+    <a href="#/work" data-r="/work" role="menuitem"><span class="nn" aria-hidden="true">02</span> WORK</a>
+    <a href="#/stack" data-r="/stack" role="menuitem"><span class="nn" aria-hidden="true">03</span> STACK</a>
+    <a href="#/terminal" data-r="/terminal" role="menuitem"><span class="nn" aria-hidden="true">04</span> TERMINAL</a>
+    <a href="#/internals" data-r="/internals" role="menuitem"><span class="nn" aria-hidden="true">05</span> INTERNALS</a>
+    <a href="#/log" data-r="/log" role="menuitem"><span class="nn" aria-hidden="true">06</span> LOG</a>
+    <a href="#/contact" data-r="/contact" role="menuitem"><span class="nn" aria-hidden="true">07</span> CONTACT</a>
   </div>
   <div class="nav-r">
-    <div class="nav-kbd" id="pal-trigger" title="Ctrl+K">⌘K</div>
+    <div class="nav-kbd" id="pal-trigger" title="Ctrl+K" role="button" tabindex="0" aria-label="Open command palette" onkeydown="if(event.key==='Enter')openPal()">⌘K</div>
     <a class="navcta" href="https://github.com/Nutricalboii" target="_blank" rel="noopener">GITHUB ↗</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
 <!-- ════════════════ INDEX ════════════════ -->
-<section class="page" data-p="/">
+<main id="main-content">
+<section class="page" data-p="/" aria-label="Home">
   <div class="wrap">
     <div class="hero reveal">
       <div class="hero-left">
-        <div class="eyebrow">CS Engineer · Dehradun, India · DIT University 2027</div>
+        <div class="eyebrow">B.Tech CSE · DIT University 2027 · Dehradun</div>
         <div class="hero-name-wrap">
           <h1>Vaibhav<br>Sharma<span class="a">.</span></h1>
         </div>
         <p class="hero-sub">
-          <span class="line" id="hero-line">I build things that touch kernels, boot processes, and production — not just components.</span>
+          <span class="line" id="hero-line">I build the layer most developers never touch. Kernels, bootloaders, hardware interfaces — the stuff that breaks at 2am and takes the whole system with it.</span>
           <span class="cursor"></span>
         </p>
         <div class="hero-actions">
-          <a href="#/work" class="btn btn-p">View work →</a>
+          <a href="#/work" class="btn btn-p">See what I've built →</a>
           <a href="#/terminal" class="btn">Open terminal_</a>
           <a href="#/internals" class="btn">Internals ⚙</a>
         </div>
@@ -1028,20 +1095,20 @@ footer {
         <div class="tele-row"><span>account age</span><b id="tel-age">—</b></div>
         <div class="tele-row"><span>current build</span><b>vaelix-os v2.0</b></div>
         <div class="tele-row"><span>status</span><b class="lv">available</b></div>
-        <div class="tele-row"><span>open to</span><b>internships · collabs</b></div>
+        <div class="tele-row"><span>open to</span><b>internships · hard problems</b></div>
       </div>
     </div>
 
     <div class="sec">
       <div class="sec-head reveal">
         <h2>systemctl list-units --active</h2>
-        <p>Status list — not a highlight reel.</p>
+        <p>What's actually running. Not a highlight reel.</p>
       </div>
-      <div class="unit reveal reveal-d1"><div class="unit-l"><span class="sdot prog"></span><div><div class="unit-name">vaelix-os.service</div><div class="unit-desc">Custom Linux distro — v2.0 "Renaissance" in progress (Wayland + Rust core)</div></div></div><div class="unit-tag">in-development</div></div>
-      <div class="unit reveal reveal-d2"><div class="unit-l"><span class="sdot live"></span><div><div class="unit-name">loq-control.service</div><div class="unit-desc">Hardware control suite for Lenovo LOQ on Linux — v2.0.2, 6 releases, MIT</div></div></div><div class="unit-tag">production</div></div>
-      <div class="unit reveal reveal-d3"><div class="unit-l"><span class="sdot block"></span><div><div class="unit-name">android-potter.service</div><div class="unit-desc">LineageOS 20 bring-up on Moto G5 Plus — month 3, blocked: bootloader trust chain</div></div></div><div class="unit-tag">month 3</div></div>
-      <div class="unit reveal reveal-d4"><div class="unit-l"><span class="sdot live"></span><div><div class="unit-name">scholarsync.service</div><div class="unit-desc">Multi-doc RAG study tool — Google GDSC TechSprint winner, live on Vercel</div></div></div><div class="unit-tag">live</div></div>
-      <div class="unit reveal reveal-d5"><div class="unit-l"><span class="sdot prog"></span><div><div class="unit-name">vitalis.service</div><div class="unit-desc">Health tracker — Next.js/FastAPI, scoped to Google Fit + Fitbit</div></div></div><div class="unit-tag">building</div></div>
+      <div class="unit reveal reveal-d1"><div class="unit-l"><span class="sdot prog"></span><div><div class="unit-name">vaelix-os.service</div><div class="unit-desc">Custom Linux distro — v2.0 "Renaissance" in progress. Wayland migration + Rust core tooling.</div></div></div><div class="unit-tag">in-development</div></div>
+      <div class="unit reveal reveal-d2"><div class="unit-l"><span class="sdot live"></span><div><div class="unit-name">loq-control.service</div><div class="unit-desc">Hardware control suite for Lenovo LOQ on Linux — reverse-engineered from scratch. 6 releases, MIT.</div></div></div><div class="unit-tag">production</div></div>
+      <div class="unit reveal reveal-d3"><div class="unit-l"><span class="sdot block"></span><div><div class="unit-name">android-potter.service</div><div class="unit-desc">LineageOS 20 on Moto G5 Plus — month 3, blocked on bootloader trust chain. Still going.</div></div></div><div class="unit-tag">blocked</div></div>
+      <div class="unit reveal reveal-d4"><div class="unit-l"><span class="sdot live"></span><div><div class="unit-name">scholarsync.service</div><div class="unit-desc">Multi-doc RAG study tool — Google GDSC TechSprint winner. Built in 24 hours, shipped same day.</div></div></div><div class="unit-tag">live</div></div>
+      <div class="unit reveal reveal-d5"><div class="unit-l"><span class="sdot prog"></span><div><div class="unit-name">vitalis.service</div><div class="unit-desc">Health tracker — scoped to exactly two integrations on purpose. Next.js/FastAPI.</div></div></div><div class="unit-tag">building</div></div>
     </div>
 
     <div class="sec">
@@ -1057,9 +1124,9 @@ footer {
           &nbsp;&nbsp;README.md — Nutricalboii/Nutricalboii
         </div>
         <div class="readme-body">
-          <p style="color:var(--dim);font-size:13.5px;">Full-stack + systems developer. B.Tech CSE, DIT University (2027).</p>
+          <p style="color:var(--dim);font-size:13.5px;">Systems builder. B.Tech CSE, DIT University (2027). I follow equity markets. I think about systems at 2am. I break things on purpose to see what holds.</p>
           <div class="readme-quote">"I experiment where theory meets hardware, build where failure is possible, and use AI as a tool — because systems that survive reality are never accidental."</div>
-          <p style="color:var(--dim);font-size:13.5px;">"Most people wait to be ready. I just start — because the only way to know if something holds is to put pressure on it."</p>
+          <p style="color:var(--dim);font-size:13.5px;">My real interest isn't software specifically — it's beautifully designed systems. Software just happens to be today's medium. The curiosity stays the same; the domain shifts.</p>
           <div class="readme-stats">
             <div class="rs"><b id="gh-repos" class="count-up">…</b><span>public repos</span></div>
             <div class="rs"><b id="gh-follow" class="count-up">…</b><span>followers</span></div>
@@ -1077,12 +1144,12 @@ footer {
 </section>
 
 <!-- ════════════════ WORK ════════════════ -->
-<section class="page" data-p="/work">
+<section class="page" data-p="/work" aria-label="Work">
   <div class="wide">
     <div class="reveal">
       <div class="eyebrow">SEC.02</div>
-      <h2 class="mono" style="font-size:32px;font-weight:700;">Case studies.</h2>
-      <p style="color:var(--dim);margin-top:10px;max-width:540px;font-size:13.5px;line-height:1.75;">Click on any project block to open its full diagnostic layout as a slide-over digital page.</p>
+      <h2 class="mono" style="font-size:32px;font-weight:700;">What I've built.</h2>
+      <p style="color:var(--dim);margin-top:10px;max-width:540px;font-size:13.5px;line-height:1.75;">Not cards. Not badges. What the problem was, why I approached it this way, what broke, and what I'd change.</p>
     </div>
     <div class="filters reveal reveal-d1" id="filters" style="margin-top:22px;">
       <div class="flt on" data-f="all">all</div>
@@ -1101,20 +1168,20 @@ footer {
           <div>
             <div class="case-meta"><span class="pill prog">in development</span><span>·</span><span>Linux Distribution</span><span>·</span><span>13 rebuilds to first clean boot</span></div>
             <h3>Vaelix OS</h3>
-            <div class="case-sub">A Linux distro that doesn't accept stock defaults. Ubuntu 24.04 base, KDE Plasma 6, XanMod kernel — shaped around how I actually work.</div>
+            <div class="case-sub">Stock distros make tradeoffs for everyone. I made one that makes tradeoffs for me. Ubuntu 24.04 base, KDE Plasma 6, XanMod kernel — 13 rebuilds to get it right.</div>
           </div>
           <div class="chev">→</div>
         </div>
         <div class="case-body">
           <div class="ci">
             <div class="ci-l">
-              <h4>The problem</h4>
-              <p>Stock distros make broad tradeoffs for broad audiences. Every fresh install means undoing vendor defaults, fighting package conflicts, and rebuilding workflow from scratch.</p>
-              <h4>The approach</h4>
-              <p>Ubuntu 24.04 LTS base. KDE Plasma 6 — the one DE that's both feature-complete and scriptable. XanMod kernel with BORE scheduler, BBR2 TCP. First clean boot took 13 rebuilds — mostly config drift between kernel and DE layers, not dramatic failures.</p>
-              <h4>Current state</h4>
+              <h4>Why this exists</h4>
+              <p>Every fresh install of Ubuntu means undoing defaults I don't want, fighting package conflicts, and rebuilding my workflow from scratch. I wanted a distro that starts where I actually work — not where Canonical thinks I should.</p>
+              <h4>How I built it</h4>
+              <p>Ubuntu 24.04 LTS base. KDE Plasma 6 — the one DE that's both feature-complete and scriptable. XanMod kernel with BORE scheduler, BBR2 TCP. First clean boot took 13 rebuilds. Most weren't dramatic failures — they were config drift between kernel and DE layers that only showed up after first login. Lesson: lock your kernel minor version before spending a week debugging display issues.</p>
+              <h4>Where it is now</h4>
               <p>v1.1 "Titanium Velocity" is stable — daily driver on the LOQ. v2.0 "Renaissance" in progress: full Wayland migration, Rust for core system tooling, GrapheneOS-inspired hardening, Kali sandbox via Podman.</p>
-              <h4>What I'd change</h4>
+              <h4>What I'd do differently</h4>
               <p>Document every rebuild failure as it happens. The 13 number is the whole story, but the specific reasons are where the learning lives. I have the shape; I don't have the receipts.</p>
             </div>
             <div>
@@ -1131,21 +1198,21 @@ footer {
           <div>
             <div class="case-meta"><span class="pill live">production · v2.0.2</span><span>·</span><span>Python · GTK4 · systemd · Polkit</span><span>·</span><span>MIT</span></div>
             <h3>LOQ Control Center</h3>
-            <div class="case-sub">The hardware control suite Lenovo never shipped for LOQ laptops on Linux. Thermal profiles, GPU switching, fan curves — zero root, zero EC manipulation risk.</div>
+            <div class="case-sub">Lenovo never shipped this. So I built it. Started as a GPU-switching script at midnight, became a production-grade hardware control suite with 6 releases.</div>
           </div>
           <div class="chev">→</div>
         </div>
         <div class="case-body">
           <div class="ci">
             <div class="ci-l">
-              <h4>The problem</h4>
-              <p>Linux users on Lenovo LOQ had no unified way to manage thermal profiles, GPU switching, or power limits. Options were fragmented shell scripts or direct EC manipulation — every mistake risked real hardware damage.</p>
-              <h4>The approach</h4>
-              <p>Started as a GPU-switching script at midnight. Over 6 versioned releases: systemd daemon, adaptive thermal policy engine, Polkit-gated privilege model, GTK4 GUI with 7-point Cairo fan curve editor.</p>
+              <h4>Why this exists</h4>
+              <p>Linux users on Lenovo LOQ had no unified way to manage thermal profiles, GPU switching, or power limits. Options were fragmented shell scripts or direct EC manipulation — every mistake risked real hardware damage. That's not a software problem, that's a safety problem.</p>
+              <h4>How it grew</h4>
+              <p>Started as a GPU-switching script at midnight because Linux took something that should have worked and didn't. Over 6 versioned releases: systemd daemon, adaptive thermal policy engine, Polkit-gated privilege model (zero sudo, ever), GTK4 GUI with 7-point Cairo fan curve editor. The architecture separated UI from hardware interfaces in v2 — should have started that way.</p>
               <h4>What I learned</h4>
-              <p>Linux hardware management at kernel level — ACPI, EC communication, sysfs power nodes. Security-first privilege escalation via pkexec. The real gap between a script that works once and software others can depend on.</p>
+              <p>Linux hardware management at kernel level — ACPI, EC communication, sysfs power nodes. Security-first privilege escalation via pkexec. The real gap between a script that works once and software others can depend on. User-facing errors still surface some raw hardware codes — that's the next pass.</p>
               <h4>What I'd change</h4>
-              <p>V1 mixed UI with hardware interfaces. V2 separated them cleanly — I'd start that way. User-facing errors still surface some raw hardware codes. That's the next pass.</p>
+              <p>v1 mixed UI with hardware interfaces. v2 separated them cleanly — I'd start that way. The architecture was right from the start; I just didn't know it yet.</p>
               <div class="code-block">
                 <div class="cb-bar"><span>loq-control.service</span><span class="cb-lang">systemd unit</span></div>
                 <pre class="cb-code"><span class="cm"># /etc/systemd/system/loq-control.service</span>
@@ -1203,21 +1270,21 @@ footer {
           <div>
             <div class="case-meta"><span class="pill blk">in progress · month 3</span><span>·</span><span>C / C++ · Shell · Linux 3.18 kernel</span></div>
             <h3>Android 13 Bring-Up — Moto G5 Plus</h3>
-            <div class="case-sub">LineageOS 20 on hardware eight years behind mainline. Blocked on bootloader trust chain. Still going — that's the point.</div>
+            <div class="case-sub">Bringing up LineageOS 20 on hardware eight years behind mainline. Blocked on bootloader trust chain. Three months in — still going. That's the point.</div>
           </div>
           <div class="chev">→</div>
         </div>
         <div class="case-body">
           <div class="ci">
             <div class="ci-l">
-              <h4>The problem</h4>
-              <p>Moto G5 Plus (potter) runs Qualcomm MSM8953 on Linux 3.18 — 8 years behind mainline. Getting Android 13 to boot means negotiating ancient vendor trees, modern AOSP build system, and driver interfaces that didn't exist in 2017.</p>
-              <h4>The approach</h4>
-              <p>Methodical layers: vendor blobs → kernel patches → HAL interfaces. Building device tree, vendor tree, kernel patches, and OrangeFox recovery tree in parallel. Current: boots to fastboot, doesn't pass verified boot.</p>
+              <h4>Why this exists</h4>
+              <p>I wanted to stop assuming and start knowing how the Android kernel actually talks to hardware. The Moto G5 Plus (potter) runs Qualcomm MSM8953 on Linux 3.18 — 8 years behind mainline. No maintained LineageOS support. No public docs. Perfect.</p>
+              <h4>How I'm doing it</h4>
+              <p>Methodical layers: vendor blobs → kernel patches → HAL interfaces. Building device tree, vendor tree, kernel patches, and OrangeFox recovery tree in parallel. Completed two kernel builds (~15.29 MiB each), resolved rootfs flashing, SELinux, and display driver config. Current state: boots to fastboot, doesn't pass verified boot.</p>
               <h4>What I'm learning</h4>
-              <p>Android build system at every layer — Soong, Make, Blueprint. How Treble-era abstractions fail on pre-Treble hardware. What "device can't be trusted" means at bootloader level, and the four ways to address it.</p>
+              <p>Android build system at every layer — Soong, Make, Blueprint. How Treble-era abstractions fail on pre-Treble hardware. What "device can't be trusted" means at bootloader level, and the four different ways to address it.</p>
               <h4>Currently blocked on</h4>
-              <p>Bootloader trust chain. Trying: test key signing via avbtool, dm-verity disable, custom bootloader flash. This is the genuinely hard part.</p>
+              <p>Bootloader trust chain. Spent two weeks thinking this was a key signing problem. It isn't — it's a verified boot chain issue. The bootloader checks signatures on the boot image, but the OEM hash of the device tree doesn't match what LineageOS expects. Trying test key signing via avbtool first. If that fails, custom bootloader flash — risky since Motorola's tool doesn't expose enough control.</p>
               <div class="code-block">
                 <div class="cb-bar"><span>Android.bp</span><span class="cb-lang">AOSP Blueprint</span></div>
                 <pre class="cb-code"><span class="cm">// android_device_motorola_potter</span>
@@ -1236,6 +1303,7 @@ footer {
             </div>
             <div>
               <div class="side-box"><div class="k">repos in this project</div><div class="rlist"><div>android_device_motorola_potter (C++)</div><div>android_vendor_motorola_potter (Makefile)</div><div>android_kernel_motorola_msm8953 (C)</div><div>android_build_patches_potter (Shell)</div><div>orangefox_potter_tree (Makefile)</div></div></div>
+              <div class="side-box"><div class="k">what this project taught me</div><div class="rlist"><div>How the Android build system works at every layer</div><div>How Treble-era abstractions fail on pre-Treble hardware</div><div>What "device can't be trusted" actually means</div><div>That dead ends are proof you explored</div></div></div>
             </div>
           </div>
         </div>
@@ -1250,21 +1318,21 @@ footer {
           <div>
             <div class="case-meta"><span class="pill live">live · hackathon winner</span><span>·</span><span>Next.js 14 · FastAPI · ChromaDB · Gemini 2.0</span></div>
             <h3>ScholarSync</h3>
-            <div class="case-sub">AI "second brain" for students — multi-document RAG that answers with citations across an entire library, not one PDF at a time.</div>
+            <div class="case-sub">Built in 24 hours for Google GDSC TechSprint. Multi-document RAG that answers with citations across an entire library — not one PDF at a time. Won the hackathon.</div>
           </div>
           <div class="chev">→</div>
         </div>
         <div class="case-body">
           <div class="ci">
             <div class="ci-l">
-              <h4>The problem</h4>
-              <p>Students drown in disconnected PDFs. Drawing connections across chapters requires the kind of overhead that blocks understanding. Study tools existed; none synthesized across an entire library simultaneously.</p>
-              <h4>The approach</h4>
-              <p>Google GDSC TechSprint Hackathon. Decoupled: Next.js 14 App Router + FastAPI + ChromaDB. Gemini 2.0 Flash for multi-document RAG with page-level citations. Interactive knowledge graph, 3D CSS flashcards for active recall.</p>
+              <h4>Why this exists</h4>
+              <p>Students drown in disconnected PDFs. Drawing connections across chapters requires the kind of mental overhead that blocks actual understanding. Study tools existed; none synthesized across an entire library simultaneously.</p>
+              <h4>How I built it</h4>
+              <p>Google GDSC TechSprint Hackathon. Decoupled architecture from the start: Next.js 14 App Router + FastAPI + ChromaDB. Gemini 2.0 Flash for multi-document RAG with page-level citations. Interactive knowledge graph, 3D CSS flashcards for active recall. Batch over streaming — was right for the 24-hour window, wrong for production.</p>
               <h4>What I learned</h4>
-              <p>RAG pipeline design from first principles — chunking strategy, embedding model choice, semantic search, structured JSON output from LLMs. How citation (not confident assertion) is what makes AI trustworthy.</p>
+              <p>RAG pipeline design from first principles — chunking strategy, embedding model choice, semantic search, structured JSON output from LLMs. How citation (not confident assertion) is what makes AI trustworthy. The performance tradeoffs between vector search accuracy and query latency.</p>
               <h4>What I'd change</h4>
-              <p>Knowledge graph nodes should open an exploration panel, not another AI call. Stream responses from day one — batch was right for the hackathon window, wrong for production.</p>
+              <p>Knowledge graph nodes should open an exploration panel, not another AI call. Stream responses from day one — batch was right for the hackathon, wrong for production. Shipping batch and winning was better than not shipping streaming.</p>
               <div class="code-block">
                 <div class="cb-bar"><span>rag_pipeline.py</span><span class="cb-lang">Python / FastAPI</span></div>
                 <pre class="cb-code"><span class="kw">async def</span> <span class="fn">query_library</span>(q: <span class="nb">str</span>, top_k: <span class="nb">int</span> <span class="op">=</span> <span class="am">5</span>) <span class="op">-></span> <span class="nb">QueryResult</span>:
@@ -1292,25 +1360,25 @@ footer {
       </div>
 
       <div class="minor-wrap reveal">
-        <div class="minor-eye">// smaller work — shipped, not padded</div>
-        <div class="minor"><div class="ml">Notum <span class="d2">— zero-knowledge vault, Electron + Fastify + WebCrypto, AES-256-GCM client-side</span></div><div class="mr">shipped</div></div>
-        <div class="minor"><div class="ml">The Sovereign Plate <span class="d2">— Node/Express/MongoDB/Twilio, live client product</span></div><div class="mr">live</div></div>
-        <div class="minor"><div class="ml">Sharma Digital X-Ray Lab <span class="d2">— React 19 + Firebase, bilingual EN/HI</span></div><div class="mr">live</div></div>
-        <div class="minor"><div class="ml">Disaster-Response-OpenEnv <span class="d2">— Meta AI Hackathon, Team Singularity, perfect score</span></div><div class="mr">hackathon</div></div>
-        <div class="minor"><div class="ml">ADYA <span class="d2">— PyQt5 + Gemini API, desktop AI assistant</span></div><div class="mr">shipped</div></div>
-        <div class="minor"><div class="ml">Vitalis <span class="d2">— health tracker, Next.js/FastAPI, scoped to Google Fit + Fitbit</span></div><div class="mr">building</div></div>
+        <div class="minor-eye">// shipped, not padded</div>
+        <div class="minor"><div class="ml">Notum <span class="d2">— zero-knowledge vault. Client-side AES-256-GCM. The server never sees plaintext.</span></div><div class="mr">shipped</div></div>
+        <div class="minor"><div class="ml">The Sovereign Plate <span class="d2">— Node/Express/MongoDB/Twilio. Real client-facing product, not a demo.</span></div><div class="mr">live</div></div>
+        <div class="minor"><div class="ml">Sharma Digital X-Ray Lab <span class="d2">— React 19 + Firebase. Bilingual EN/HI. Real business, real users.</span></div><div class="mr">live</div></div>
+        <div class="minor"><div class="ml">Disaster-Response-OpenEnv <span class="d2">— Meta AI Hackathon. Team Singularity. Perfect score.</span></div><div class="mr">hackathon</div></div>
+        <div class="minor"><div class="ml">ADYA <span class="d2">— PyQt5 + Gemini API. Desktop AI assistant.</span></div><div class="mr">shipped</div></div>
+        <div class="minor"><div class="ml">Vitalis <span class="d2">— Health tracker. Scoped to exactly two integrations on purpose — Google Fit + Fitbit.</span></div><div class="mr">building</div></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ════════════════ STACK ════════════════ -->
-<section class="page" data-p="/stack">
+<section class="page" data-p="/stack" aria-label="Tech stack">
   <div class="wide">
     <div class="reveal">
       <div class="eyebrow">SEC.03</div>
       <h2 class="mono" style="font-size:32px;font-weight:700;">The workbench.</h2>
-      <p style="color:var(--dim);margin-top:10px;max-width:540px;font-size:13.5px;line-height:1.75;">Not a skill list. Tiers mark how central each tool is — daily driver, production use, or active learning.</p>
+      <p style="color:var(--dim);margin-top:10px;max-width:540px;font-size:13.5px;line-height:1.75;">Not a skill list. Only tools I'd defend in an interview. Tiers mark how central each one is.</p>
     </div>
     <div class="sgrid reveal reveal-d1">
       <div class="scat">
@@ -1388,12 +1456,12 @@ footer {
 </section>
 
 <!-- ════════════════ TERMINAL ════════════════ -->
-<section class="page" data-p="/terminal">
+<section class="page" data-p="/terminal" aria-label="Interactive terminal">
   <div class="wrap">
     <div class="reveal">
       <div class="eyebrow">SEC.04</div>
       <h2 class="mono" style="font-size:32px;font-weight:700;">Don't read. Run it.</h2>
-      <p style="color:var(--dim);margin-top:10px;font-size:13.5px;">Real shell. Real filesystem. <span style="color:var(--amber);font-family:var(--mono);">Tab</span> to complete · <span style="color:var(--amber);font-family:var(--mono);">↑↓</span> history · <span style="color:var(--amber);font-family:var(--mono);">Ctrl+L</span> to clear</p>
+      <p style="color:var(--dim);margin-top:10px;font-size:13.5px;">Real shell. Real filesystem. I live here more than most people think.</p>
     </div>
     <div class="termwrap reveal reveal-d1" id="termwrap">
       <div class="termbar">
@@ -1423,12 +1491,12 @@ footer {
 </section>
 
 <!-- ════════════════ INTERNALS ════════════════ -->
-<section class="page" data-p="/internals">
+<section class="page" data-p="/internals" aria-label="Technical internals">
   <div class="wide">
     <div class="reveal">
       <div class="eyebrow">SEC.05</div>
       <h2 class="mono" style="font-size:32px;font-weight:700;">Under the hood.</h2>
-      <p style="color:var(--dim);margin-top:10px;max-width:560px;font-size:13.5px;line-height:1.75;">Live demos of concepts I actually work with. Real algorithms running in your browser — not decorative.</p>
+      <p style="color:var(--dim);margin-top:10px;max-width:560px;font-size:13.5px;line-height:1.75;">Live demos of concepts I actually work with. Not decorative — real algorithms running in your browser.</p>
     </div>
     <div class="int-grid">
       <div class="int-box reveal reveal-d1">
@@ -1485,7 +1553,7 @@ footer {
 </section>
 
 <!-- ════════════════ LOG ════════════════ -->
-<section class="page" data-p="/log">
+<section class="page" data-p="/log" aria-label="Build log">
   <div class="wrap">
     <div class="reveal">
       <div class="eyebrow">SEC.06</div>
@@ -1496,19 +1564,19 @@ footer {
       <div class="log-entry reveal">
         <div class="log-date">2026-06-28</div>
         <div class="log-title">Why LOQ v2 separated UI from hardware interfaces</div>
-        <div class="log-body">v1 had a monolithic class handling both GTK4 widget events and sysfs writes. When I added the 7-point fan curve editor, Cairo draw callbacks were tangled with hardware writes — impossible to test the UI without hardware attached. v2 uses clean D-Bus: GTK4 sends structured calls, the systemd daemon handles hardware. GUI is now testable offline. Should have started this way.</div>
+        <div class="log-body">v1 had a monolithic class handling both GTK4 widget events and sysfs writes. When I added the 7-point fan curve editor, Cairo draw callbacks were tangled with hardware writes — impossible to test the UI without hardware attached. v2 uses clean D-Bus: GTK4 sends structured calls, the systemd daemon handles hardware. GUI is now testable offline. Should have started this way. The architecture was right; I just didn't know it yet.</div>
         <div class="log-tags"><span class="log-tag">LOQ Control</span><span class="log-tag">Architecture</span><span class="log-tag">systemd</span></div>
       </div>
       <div class="log-entry reveal reveal-d1">
         <div class="log-date">2026-06-14</div>
         <div class="log-title">Android bring-up: what "device can't be trusted" actually means</div>
-        <div class="log-body">Spent two weeks thinking this was a key signing problem. It isn't — it's a verified boot chain issue. The bootloader checks signatures on the boot image, but the OEM hash of the device tree doesn't match what LineageOS expects. Four approaches: (1) test-key signing via avbtool, (2) dm-verity disable, (3) custom bootloader, (4) Magisk delta patch. Trying (1). If that fails, (3) — which means a custom bootloader flash, risky since Motorola's tool doesn't expose enough control.</div>
+        <div class="log-body">Spent two weeks thinking this was a key signing problem. It isn't — it's a verified boot chain issue. The bootloader checks signatures on the boot image, but the OEM hash of the device tree doesn't match what LineageOS expects. Four approaches: (1) test-key signing via avbtool, (2) dm-verity disable, (3) custom bootloader, (4) Magisk delta patch. Trying (1). If that fails, (3) — which means a custom bootloader flash, risky since Motorola's tool doesn't expose enough control. Dead ends are proof you explored.</div>
         <div class="log-tags"><span class="log-tag">Android</span><span class="log-tag">Bootloader</span><span class="log-tag">MSM8953</span></div>
       </div>
       <div class="log-entry reveal reveal-d2">
         <div class="log-date">2026-05-30</div>
-        <div class="log-title">Vaelix v1.1: 13 rebuilds — what failed and why</div>
-        <div class="log-body">Rebuilds 1-3: kernel version incompatibility with SDDM's DRM interface. Rebuilds 4-6: XanMod flags that break hibernation on Intel + NVME power states. Rebuilds 7-10: Cairo/Pango font rendering mismatch visible only after first login. Rebuilds 11-13: sysfs power management changes between kernel minor versions. Lesson: lock your kernel minor version in the build config before spending a week debugging display issues.</div>
+        <div class="log-title">Vaelix v1.1: the 13 rebuilds — what failed and why</div>
+        <div class="log-body">Rebuilds 1-3: kernel version incompatibility with SDDM's DRM interface. Rebuilds 4-6: XanMod flags that break hibernation on Intel + NVME power states. Rebuilds 7-10: Cairo/Pango font rendering mismatch visible only after first login. Rebuilds 11-13: sysfs power management changes between kernel minor versions. Lesson: lock your kernel minor version in the build config before spending a week debugging display issues. The 13 number is the whole story, but the specific reasons are where the learning lives.</div>
         <div class="log-tags"><span class="log-tag">Vaelix OS</span><span class="log-tag">Linux Kernel</span><span class="log-tag">XanMod</span></div>
       </div>
       <div class="log-entry reveal reveal-d3">
@@ -1522,13 +1590,13 @@ footer {
 </section>
 
 <!-- ════════════════ CONTACT ════════════════ -->
-<section class="page" data-p="/contact">
+<section class="page" data-p="/contact" aria-label="Contact">
   <div class="wrap">
     <div class="eyebrow reveal">SEC.07</div>
     <div class="cg">
       <div class="reveal">
         <h1>Let's talk.<br><span class="a">Preferably about hard problems.</span></h1>
-        <p style="color:var(--dim);margin-top:18px;max-width:440px;font-size:13.5px;line-height:1.8;">Open to internships, collaborations, conversations about systems design, Linux, AI infrastructure — anything without an obvious answer.</p>
+        <p style="color:var(--dim);margin-top:18px;max-width:440px;font-size:13.5px;line-height:1.8;">Open to internships, collaborations, conversations about systems design, Linux, AI infrastructure — anything without an obvious answer. If you're building something that can fail at the hardware layer, I'm interested.</p>
         <div class="contact-quote" style="margin-top:28px;">
           <p>"I experiment where theory meets hardware, build where failure is possible, and use AI as a tool — because systems that survive reality are never accidental."</p>
         </div>
@@ -1547,15 +1615,16 @@ footer {
 <div id="subpage-overlay" role="dialog" aria-modal="true" aria-labelledby="subpage-header-title">
   <div id="subpage-header">
     <div id="subpage-header-title">SYSTEM_DIAGNOSTIC //</div>
-    <button class="subpage-close-btn" onclick="closeSubpage()">[ CLOSE ESC ]</button>
+    <button class="subpage-close-btn" onclick="closeSubpage()" aria-label="Close project detail">[ CLOSE ESC ]</button>
   </div>
   <div id="subpage-body"></div>
 </div>
+</main>
 
-<footer>
+<footer role="contentinfo">
   <div class="wrap fi">
     <span>Vaibhav Sharma · Dehradun, India · 2026</span>
-    <span>Built with intention. Open source by default.</span>
+    <span>Built with intention. Open source by default. "Most people wait to be ready. I just start."</span>
   </div>
 </footer>
 
@@ -1568,14 +1637,15 @@ footer {
 const BOOT=[
   {tag:'[    0.000000] ',text:'Booting vaelix-os kernel 6.5.0-xanmod1-vs...',cls:''},
   {tag:'[    0.038214] ',text:'ACPI: LAPIC_NMI (acpi_id[0x00] lint[0x1])',cls:'tdim'},
-  {tag:'[    0.082914] ',text:'Starting vaelix-os.service...',ok:'[  OK  ]'},
-  {tag:'[    0.121034] ',text:'Starting loq-control.service...',ok:'[  OK  ]'},
+  {tag:'[    0.082914] ',text:'Starting loq-control.service...',ok:'[  OK  ]'},
+  {tag:'[    0.121034] ',text:'Starting vaelix-os.service...',ok:'[  OK  ]'},
   {tag:'[    0.168244] ',text:'Starting scholarsync.service...',ok:'[  OK  ]'},
-  {tag:'[    0.212899] ',text:'Starting android-potter.service...',ok:'[ WARN ]',okc:'bwarn'},
+  {tag:'[    0.212899] ',text:'Starting android-potter.service...',ok:'[  WARN ]',okc:'bwarn'},
   {tag:'[    0.259011] ',text:'Starting vitalis.service...',ok:'[  OK  ]'},
   {tag:'[    0.301542] ',text:'Reached target: multi-user.system',cls:''},
   {tag:'',text:''},
   {tag:'',text:'Vaelix OS 1.1 "Titanium Velocity"',cls:'tgreen'},
+  {tag:'',text:'"Most people wait to be ready. I just start."',cls:'tdim'},
   {tag:'',text:''},
   {tag:'',text:'vaibhav login: vaibhav ▋',cls:''},
 ];
@@ -1654,9 +1724,14 @@ setInterval(tick,1000); tick();
 
 /* ════════════════════════════════════
    GITHUB API
-════════════════════════════════════ */
+═══════════════════════════════════ */
+const ghIds=['tel-repos','gh-repos','tel-follow','gh-follow'];
+ghIds.forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='…';});
 fetch('https://api.github.com/users/Nutricalboii')
-  .then(r=>r.ok?r.json():Promise.reject())
+  .then(r=>{
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  })
   .then(d=>{
     const animCount=(el,val)=>{
       if(!el) return; let cur=0;
@@ -1672,7 +1747,10 @@ fetch('https://api.github.com/users/Nutricalboii')
       const a=document.getElementById('tel-age'); if(a) a.textContent=yr+'y';
     }
   }).catch(()=>{
-    ['tel-repos','gh-repos','tel-follow','gh-follow'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='—';});
+    ghIds.forEach(id=>{
+      const e=document.getElementById(id);
+      if(e){e.textContent='—';e.title='GitHub API unavailable';}
+    });
   });
 
 /* ════════════════════════════════════
@@ -1715,8 +1793,13 @@ function openPal(){
   const p=document.getElementById('palette'); p.classList.add('open');
   const i=document.getElementById('pal-input'); i.value=''; i.focus();
   renderPal(''); pSel=0; updPal();
+  trapFocus(p);
 }
-function closePal(){ document.getElementById('palette').classList.remove('open'); }
+function closePal(){ 
+  const p=document.getElementById('palette');
+  p.classList.remove('open'); 
+  releaseFocus(p);
+}
 function renderPal(q){
   const res=document.getElementById('pal-results');
   const items=q?PAL.filter(i=>i.label.toLowerCase().includes(q.toLowerCase())):PAL;
@@ -1778,6 +1861,7 @@ function openSubpage(id){
   backdrop.classList.add('active');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+  trapFocus(overlay);
 
   // Specific initializations inside overlay context
   if(id === 'case-loq'){
@@ -1793,6 +1877,7 @@ function closeSubpage(){
   overlay.classList.remove('open');
   backdrop.classList.remove('active');
   document.body.style.overflow = '';
+  releaseFocus(overlay);
   
   // Clear trace values if any
   currentActiveProjectSource = null;
@@ -1903,24 +1988,24 @@ function initFanCurve(){
    TERMINAL ENGINE
 ════════════════════════════════════ */
 const FS={'~':{_d:1,
-  'README.md':{_f:1,_c:`# Vaibhav Sharma\n\nFull-stack + systems developer. B.Tech CSE, DIT University (2027).\n\n"I experiment where theory meets hardware, build where failure\nis possible, and use AI as a tool — because systems that survive\nreality are never accidental."\n\n## Currently\n  building:  vaelix-os v2.0 "Renaissance"\n  blocked:   android-potter bootloader trust chain\n  live:      loq-control v2.0.2, scholarsync\n\n## Links\n  github.com/Nutricalboii\n  linkedin.com/in/vaibsharma86`},
+  'README.md':{_f:1,_c:`# Vaibhav Sharma\n\nSystems builder. B.Tech CSE, DIT University (2027).\n\n"I experiment where theory meets hardware, build where failure\nis possible, and use AI as a tool — because systems that survive\nreality are never accidental."\n\n## What I do\n  building:  vaelix-os v2.0 "Renaissance"\n  shipped:   loq-control v2.0.2 (6 releases, MIT)\n  blocked:   android-potter bootloader trust chain\n  live:      scholarsync (Google GDSC TechSprint winner)\n\n## What I believe\n  - Learn by shipping, not by watching tutorials\n  - Understand before optimizing\n  - Failure is data, not defeat\n  - AI is a tool. Thinking is still yours.\n\n## Links\n  github.com/Nutricalboii\n  linkedin.com/in/vaibsharma86`},
   '.bashrc':{_f:1,_c:`# ~/.bashrc — Vaelix OS\nexport EDITOR=vim\nalias ll='ls -la --color=auto'\nalias gs='git status'\nalias glog='git log --oneline --graph'\nPS1='\\u@vaelix:\\w$ '`},
-  'status.json':{_f:1,_c:`{\n  "building": "vaelix-os v2.0",\n  "mood": "debugging bootloader trust chain",\n  "location": "Dehradun, India",\n  "open_to": ["internships","collaborations","hard problems"],\n  "status": "available"\n}`},
+  'status.json':{_f:1,_c:`{\n  "name": "Vaibhav Sharma",\n  "building": "vaelix-os v2.0",\n  "mood": "debugging bootloader trust chain",\n  "location": "Dehradun, India",\n  "university": "DIT University (2027)",\n  "role": "Head of PR, CSI DIT (900+ members)",\n  "open_to": ["internships","collaborations","hard problems"],\n  "philosophy": "systems that survive reality are never accidental",\n  "status": "available"\n}`},
   'stack.json':{_f:1,_c:`{\n  "systems": ["Linux","systemd","Polkit","GTK4","ACPI","Android AOSP"],\n  "languages": ["Python","TypeScript","C/C++","Bash","Java"],\n  "web": ["Next.js","FastAPI","Gemini","ChromaDB","MongoDB"],\n  "tools": ["Git","Docker","Vercel","Electron","WebCrypto"]\n}`},
   'projects':{_d:1,
     'loq-control':{_d:1,
-      'README.md':{_f:1,_c:`# LOQ Control Center v2.0.2\n\nHardware control suite for Lenovo LOQ laptops on Linux.\nProduction, MIT licensed, 6 releases.\n\ngithub.com/Nutricalboii/loq-control`},
+      'README.md':{_f:1,_c:`# LOQ Control Center v2.0.2\n\nHardware control suite for Lenovo LOQ on Linux.\nStarted as a GPU-switching script at midnight.\nBecame production-grade over 6 releases.\n\n"Lenovo never shipped this. So I built it."\n\ngithub.com/Nutricalboii/loq-control`},
       'loq_control.py':{_f:1,_c:`#!/usr/bin/env python3\n# LOQ Control — thermal policy engine\n\ndef apply_thermal_policy(profile):\n    """Apply via Polkit — no root needed."""\n    proxy = bus.get_object(\n        'com.vaibhav.loqcontrol',\n        '/com/vaibhav/loqcontrol/Thermal'\n    )\n    iface = dbus.Interface(proxy, 'com.vaibhav.loqcontrol.Thermal')\n    iface.SetProfile(profile.name, profile.pl1, profile.pl2)`},
       'loq-control.service':{_f:1,_c:`[Unit]\nDescription=LOQ Hardware Control Daemon\nAfter=multi-user.target dbus.service\n\n[Service]\nType=dbus\nBusName=com.vaibhav.loqcontrol\nExecStart=/usr/bin/python3 /usr/lib/loq-control/daemon.py\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target`},
     },
     'scholarsync':{_d:1,
-      'README.md':{_f:1,_c:`# ScholarSync\n\nAI second brain for students. Multi-document RAG.\nGoogle GDSC TechSprint Hackathon winner.\nLive: scholarsync-nutricalboii.vercel.app\n\nStack: Next.js 14, FastAPI, ChromaDB, Gemini 2.0 Flash`},
+      'README.md':{_f:1,_c:`# ScholarSync\n\nAI second brain for students. Multi-document RAG.\nBuilt in 24 hours. Won Google GDSC TechSprint.\n\n"Shipping batch and winning was better than\nnot shipping streaming."\n\nLive: scholarsync-nutricalboii.vercel.app\nStack: Next.js 14, FastAPI, ChromaDB, Gemini 2.0 Flash`},
     },
     'vaelix-os':{_d:1,
-      'README.md':{_f:1,_c:`# Vaelix OS\n\nCustom Linux distribution. Ubuntu 24.04 base.\nKDE Plasma 6, XanMod kernel (BORE scheduler).\n\nv1.1 "Titanium Velocity" — stable, daily driver\nv2.0 "Renaissance" — in progress`},
+      'README.md':{_f:1,_c:`# Vaelix OS\n\nCustom Linux distribution. Ubuntu 24.04 base.\nKDE Plasma 6, XanMod kernel (BORE scheduler).\n\n13 rebuilds to first clean boot.\nLesson: lock your kernel minor version.\n\nv1.1 "Titanium Velocity" — stable, daily driver\nv2.0 "Renaissance" — in progress`},
     },
     'android-potter':{_d:1,
-      'README.md':{_f:1,_c:`# Android 13 Bring-Up — Moto G5 Plus\n\nLineageOS 20 on MSM8953 / Linux 3.18.\nMonth 3. Blocked on bootloader trust chain.\n\nCurrent state:\n  - Device boots to fastboot ✓\n  - Verified boot: FAIL ✗`},
+      'README.md':{_f:1,_c:`# Android 13 Bring-Up — Moto G5 Plus\n\nLineageOS 20 on MSM8953 / Linux 3.18.\nMonth 3. Blocked on bootloader trust chain.\n\n"Dead ends are proof you explored."\n\nCurrent state:\n  - Device boots to fastboot ✓\n  - Verified boot: FAIL ✗\n  - Tried: avbtool test-key signing\n  - Next: custom bootloader flash`},
       'Android.bp':{_f:1,_c:`cc_library_shared {\n    name: "camera.msm8953",\n    relative_install_path: "hw",\n    srcs: ["QCamera2/HAL/QCamera2HWI.cpp"],\n    shared_libs: ["liblog","libhardware"],\n    cflags: ["-DHAS_MULTIMEDIA_HINTS"],\n    vendor: true,\n}`},
     },
   },
@@ -1967,12 +2052,12 @@ function termExec(raw){
   const cmd=args[0]?.toLowerCase();
   const H={
     help:cmdHelp,ls:cmdLs,dir:cmdLs,cd:cmdCd,cat:cmdCat,pwd:()=>tL(cwdD()),
-    whoami:()=>tL('vaibhav'),neofetch:cmdNeofetch,uname:cmdUname,
+    whoami:()=>tL('vaibhav — systems builder, not just a developer'),neofetch:cmdNeofetch,uname:cmdUname,
     git:cmdGit,sudo:cmdSudo,echo:()=>tL(args.slice(1).join(' ')),
     clear:()=>{out().innerHTML='';return null;},
     history:()=>{TH.slice().reverse().forEach((h,i)=>tP(`  ${String(i+1).padStart(3)}  ${h}`));},
     tree:cmdTree,ps:cmdPs,
-    uptime:()=>tL('up 3 months, 4 weeks — load average: 0.42, 0.38, 0.41'),
+    uptime:()=>tL('up 3 months, 4 weeks — building, not waiting to be ready'),
     date:()=>tL(new Date().toString()),
     man:cmdMan,
     exit:()=>tL('No exit from this terminal. You are home.','tdim'),
@@ -2036,10 +2121,11 @@ function cmdNeofetch(){
     ['     (|     | )      ','Kernel:   6.5.0-xanmod1-vs',''],
     ["    /'\\___  _/`\\     ",'Shell:    bash 5.2.15',''],
     ['    \\___)=(___/      ','DE:       KDE Plasma 6.0',''],
-    ['                     ','Resolution: 1920x1080',''],
+    ['                     ','Uptime:   3 months, 4 weeks',''],
     ['                     ','CPU:      Intel i5-12450H @ 4.4GHz',''],
     ['                     ','GPU:      NVIDIA RTX 3050 Mobile',''],
     ['                     ','Memory:   4121MiB / 15892MiB',''],
+    ['                     ','Projects: 5 active, 1 blocked, 2 shipped',''],
   ].forEach(([art,info,cls])=>{
     const d=document.createElement('div'); d.className='tl tpre';
     d.innerHTML=`<span style="color:#3a3835">${art}</span><span style="color:${cls==='tamber'?'#ffb454':cls==='tdim'?'#575250':'#9a938a'}">${info}</span>`;
@@ -2280,6 +2366,55 @@ document.getElementById('sched-play')?.addEventListener('click',()=>{
   else{clearInterval(sTimer);if(pb)pb.textContent='▶ Run';}
 });
 document.getElementById('sched-reset')?.addEventListener('click',resetSched);
+
+/* ════════════════════════════════════
+   MOBILE HAMBURGER MENU
+═══════════════════════════════════ */
+const hamburger=document.getElementById('nav-hamburger');
+const navlinks=document.getElementById('navlinks');
+if(hamburger&&navlinks){
+  hamburger.addEventListener('click',()=>{
+    const open=navlinks.classList.toggle('open');
+    hamburger.classList.toggle('open',open);
+    hamburger.setAttribute('aria-expanded',open);
+  });
+  navlinks.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>{
+      navlinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+    });
+  });
+}
+
+/* ════════════════════════════════════
+   FOCUS TRAPPING FOR OVERLAYS
+═══════════════════════════════════ */
+function trapFocus(el){
+  const focusable=el.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  if(!focusable.length)return;
+  const first=focusable[0], last=focusable[focusable.length-1];
+  function handler(e){
+    if(e.key!=='Tab')return;
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+  el._focusTrap=handler;
+  el.addEventListener('keydown',handler);
+  first.focus();
+}
+function releaseFocus(el){
+  if(el._focusTrap)el.removeEventListener('keydown',el._focusTrap);
+}
+
+/* ════════════════════════════════════
+   SKIP NAV LINK
+═══════════════════════════════════ */
+document.querySelector('.skip-nav')?.addEventListener('click',e=>{
+  e.preventDefault();
+  const target=document.getElementById('main-content');
+  if(target){target.tabIndex=-1;target.focus();}
+});
 </script>
 </body>
 </html>
