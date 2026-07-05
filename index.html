@@ -1101,6 +1101,7 @@ footer {
         <div class="tele-row"><span>local time (IST)</span><b id="tel-time">--:--:--</b></div>
         <div class="tele-row"><span>github repos</span><b class="lv" id="tel-repos">—</b></div>
         <div class="tele-row"><span>github followers</span><b class="lv" id="tel-follow">—</b></div>
+        <div class="tele-row"><span>contributions</span><b class="lv" id="tel-contribs">—</b></div>
         <div class="tele-row"><span>account age</span><b id="tel-age">—</b></div>
         <div class="tele-row"><span>current build</span><b>vaelix-os v2.0</b></div>
         <div class="tele-row"><span>status</span><b class="lv">available</b></div>
@@ -1140,6 +1141,7 @@ footer {
           <div class="readme-stats">
             <div class="rs"><b id="gh-repos" class="count-up">…</b><span>public repos</span></div>
             <div class="rs"><b id="gh-follow" class="count-up">…</b><span>followers</span></div>
+            <div class="rs"><b id="gh-contribs" class="count-up">…</b><span>contributions</span></div>
             <div class="rs"><b>5+</b><span>languages</span></div>
             <div class="rs"><b>6</b><span>LOQ releases</span></div>
             <div class="rs"><b>CS50x</b><span>HarvardX</span></div>
@@ -1744,8 +1746,8 @@ setInterval(tick,1000); tick();
 
 /* ════════════════════════════════════
    GITHUB API
-═══════════════════════════════════ */
-const ghIds=['tel-repos','gh-repos','tel-follow','gh-follow'];
+════════════════════════════════════ */
+const ghIds=['tel-repos','gh-repos','tel-follow','gh-follow','tel-contribs'];
 ghIds.forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='…';});
 fetch('https://api.github.com/users/Nutricalboii')
   .then(r=>{
@@ -1771,6 +1773,19 @@ fetch('https://api.github.com/users/Nutricalboii')
       const e=document.getElementById(id);
       if(e){e.textContent='—';e.title='GitHub API unavailable';}
     });
+  });
+fetch('https://github.com/users/Nutricalboii/contributions')
+  .then(r=>r.text())
+  .then(html=>{
+    const match=html.match(/(\d+)\s*contributions/);
+    if(match){
+      const count=match[1];
+      const el=document.getElementById('tel-contribs');
+      if(el) el.textContent=count;
+      const ghEl=document.getElementById('gh-contribs');
+      if(ghEl) ghEl.textContent=count;
+    }
+  }).catch(()=>{});
   });
 
 /* ════════════════════════════════════
