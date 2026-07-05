@@ -1747,9 +1747,10 @@ setInterval(tick,1000); tick();
 /* ════════════════════════════════════
    GITHUB API
 ════════════════════════════════════ */
-const ghIds=['tel-repos','gh-repos','tel-follow','gh-follow','tel-contribs'];
+var ghIds=['tel-repos','gh-repos','tel-follow','gh-follow','tel-contribs'];
 ghIds.forEach(function(id){var e=document.getElementById(id);if(e)e.textContent='…';});
-if(window.location.protocol!=='file:'){
+var isLocal=window.location.protocol==='file:';
+if(!isLocal){
   fetch('https://api.github.com/users/Nutricalboii')
     .then(function(r){
       if(!r.ok) throw new Error('HTTP '+r.status);
@@ -1769,29 +1770,20 @@ if(window.location.protocol!=='file:'){
         var yr=Math.max(1,Math.floor((Date.now()-new Date(d.created_at))/(365.25*864e5)));
         var a=document.getElementById('tel-age'); if(a) a.textContent=yr+'y';
       }
+      var telC=document.getElementById('tel-contribs'); if(telC) telC.textContent='952';
+      var ghC=document.getElementById('gh-contribs'); if(ghC) ghC.textContent='952';
     }).catch(function(){
-      ghIds.forEach(function(id){
-        var e=document.getElementById(id);
-        if(e){e.textContent='—';e.title='GitHub API unavailable';}
-      });
+      var telC=document.getElementById('tel-contribs'); if(telC) telC.textContent='952';
+      var ghC=document.getElementById('gh-contribs'); if(ghC) ghC.textContent='952';
     });
-  fetch('https://github.com/users/Nutricalboii/contributions')
-    .then(function(r){return r.text()})
-    .then(function(html){
-      var match=html.match(/(\d+)\s*contributions/);
-      if(match){
-        var count=match[1];
-        var el=document.getElementById('tel-contribs');
-        if(el) el.textContent=count;
-        var ghEl=document.getElementById('gh-contribs');
-        if(ghEl) ghEl.textContent=count;
-      }
-    }).catch(function(){});
 } else {
-  ghIds.forEach(function(id){
-    var e=document.getElementById(id);
-    if(e) e.textContent='—';
-  });
+  document.getElementById('tel-repos').textContent='28';
+  document.getElementById('tel-follow').textContent='—';
+  document.getElementById('tel-contribs').textContent='952';
+  document.getElementById('gh-repos').textContent='28';
+  document.getElementById('gh-follow').textContent='—';
+  document.getElementById('gh-contribs').textContent='952';
+  var a=document.getElementById('tel-age'); if(a) a.textContent='1y';
 }
 
 /* ════════════════════════════════════
@@ -1799,60 +1791,39 @@ if(window.location.protocol!=='file:'){
 ════════════════════════════════════ */
 (function(){
   try{
-  const g=document.getElementById('cgraph'); if(!g) return;
-  const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const DAYS=['','Mon','','Wed','','Fri',''];
-  const today=new Date();
-  const startDate=new Date(today);
-  startDate.setDate(startDate.getDate()-364);
-  startDate.setDate(startDate.getDate()-startDate.getDay());
-  function renderGraph(levels){
-    let html='<div class="cgraph-months">';
-    let weekDate=new Date(startDate);
-    for(let w=0;w<53;w++){
-      const d=new Date(weekDate);
-      if(d.getDate()<=7||w===0) html+='<div class="cgraph-month" style="min-width:14px">'+MONTHS[d.getMonth()]+'</div>';
-      else html+='<div class="cgraph-month" style="min-width:14px"></div>';
-      weekDate.setDate(weekDate.getDate()+7);
-    }
-    html+='</div><div class="cgraph-grid"><div class="cgraph-days">';
-    DAYS.forEach(d=>{html+='<div class="cgraph-day">'+d+'</div>';});
-    html+='</div><div class="cgraph-cols">';
-    let dayIdx=0;
-    for(let w=0;w<53;w++){
-      html+='<div class="cgraph-col">';
-      for(let d=0;d<7;d++){
-        const cellDate=new Date(startDate);
-        cellDate.setDate(cellDate.getDate()+w*7+d);
-        if(cellDate>today){html+='<div class="cgraph-cell" style="visibility:hidden"></div>';continue;}
-        const n=dayIdx<levels.length?levels[dayIdx]:0;
-        dayIdx++;
-        const dateStr=MONTHS[cellDate.getMonth()]+' '+cellDate.getDate()+', '+cellDate.getFullYear();
-        html+='<div class="cgraph-cell" data-n="'+n+'" title="'+dateStr+': '+n+' contribution'+(n!==1?'s':'')+'"></div>';
-      }
-      html+='</div>';
-    }
-    html+='</div></div><div class="cgraph-legend">Less <div class="cgraph-legend-cell" style="background:var(--line2)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.22)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.42)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.66)"></div><div class="cgraph-legend-cell" style="background:var(--green)"></div> More</div>';
-    g.innerHTML=html;
+  var g=document.getElementById('cgraph'); if(!g) return;
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var DAYS=['','Mon','','Wed','','Fri',''];
+  var levels=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,3,1,0,1,1,1,1,1,0,1,1,1,2,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,2,1,1,1,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,1,1,4,1,2,1,1,1,1,1,1,1,3,1,1,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,3,1,2,1,1,1,1,1,1,1,1,2,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,2,1,1,0,1,1,0,2,1,0,4,1,1,1,1,0,1,2,3,4];
+  var startDate=new Date('2025-06-29T00:00:00Z');
+  var today=new Date();
+  var html='<div class="cgraph-months">';
+  var weekDate=new Date(startDate);
+  for(var w=0;w<53;w++){
+    var d=new Date(weekDate);
+    if(d.getDate()<=7||w===0) html+='<div class="cgraph-month" style="min-width:14px">'+MONTHS[d.getMonth()]+'</div>';
+    else html+='<div class="cgraph-month" style="min-width:14px"></div>';
+    weekDate.setDate(weekDate.getDate()+7);
   }
-  const fb=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,3,1,0,1,1,1,1,1,0,1,1,1,2,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,2,1,1,1,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,1,1,4,1,2,1,1,1,1,1,1,1,3,1,1,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,3,1,2,1,1,1,1,1,1,1,1,2,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,2,1,1,0,1,1,0,2,1,0,4,1,1,1,1,0,1,2,3,4];
-  renderGraph(fb);
-  if(window.location.protocol!=='file:'){
-    fetch('https://github.com/users/Nutricalboii/contributions')
-      .then(function(r){return r.text()})
-      .then(function(h){
-        var p=new DOMParser();
-        var d=p.parseFromString(h,'text/html');
-        var cells=d.querySelectorAll('.ContributionCalendar-day');
-        var lv=[];
-        cells.forEach(function(c){
-          var l=c.getAttribute('data-level');
-          if(l!==null) lv.push(parseInt(l));
-        });
-        if(lv.length>0) renderGraph(lv);
-      })
-      .catch(function(){});
+  html+='</div><div class="cgraph-grid"><div class="cgraph-days">';
+  DAYS.forEach(function(d){html+='<div class="cgraph-day">'+d+'</div>';});
+  html+='</div><div class="cgraph-cols">';
+  var dayIdx=0;
+  for(var w=0;w<53;w++){
+    html+='<div class="cgraph-col">';
+    for(var d=0;d<7;d++){
+      var cellDate=new Date(startDate);
+      cellDate.setDate(cellDate.getDate()+w*7+d);
+      if(cellDate>today){html+='<div class="cgraph-cell" style="visibility:hidden"></div>';continue;}
+      var n=dayIdx<levels.length?levels[dayIdx]:0;
+      dayIdx++;
+      var dateStr=MONTHS[cellDate.getMonth()]+' '+cellDate.getDate()+', '+cellDate.getFullYear();
+      html+='<div class="cgraph-cell" data-n="'+n+'" title="'+dateStr+': '+n+' contribution'+(n!==1?'s':'')+'"></div>';
+    }
+    html+='</div>';
   }
+  html+='</div></div><div class="cgraph-legend">Less <div class="cgraph-legend-cell" style="background:var(--line2)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.22)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.42)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.66)"></div><div class="cgraph-legend-cell" style="background:var(--green)"></div> More</div>';
+  g.innerHTML=html;
   }catch(e){}
 })();
 
