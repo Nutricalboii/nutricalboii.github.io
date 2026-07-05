@@ -1748,50 +1748,58 @@ setInterval(tick,1000); tick();
    GITHUB API
 ════════════════════════════════════ */
 const ghIds=['tel-repos','gh-repos','tel-follow','gh-follow','tel-contribs'];
-ghIds.forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='…';});
-fetch('https://api.github.com/users/Nutricalboii')
-  .then(r=>{
-    if(!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.json();
-  })
-  .then(d=>{
-    const animCount=(el,val)=>{
-      if(!el) return; let cur=0;
-      const step=()=>{cur=Math.min(cur+1,val); el.textContent=cur; if(cur<val) requestAnimationFrame(step);};
-      requestAnimationFrame(step);
-    };
-    animCount(document.getElementById('tel-repos'),d.public_repos??0);
-    animCount(document.getElementById('tel-follow'),d.followers??0);
-    animCount(document.getElementById('gh-repos'),d.public_repos??0);
-    animCount(document.getElementById('gh-follow'),d.followers??0);
-    if(d.created_at){
-      const yr=Math.max(1,Math.floor((Date.now()-new Date(d.created_at))/(365.25*864e5)));
-      const a=document.getElementById('tel-age'); if(a) a.textContent=yr+'y';
-    }
-  }).catch(()=>{
-    ghIds.forEach(id=>{
-      const e=document.getElementById(id);
-      if(e){e.textContent='—';e.title='GitHub API unavailable';}
+ghIds.forEach(function(id){var e=document.getElementById(id);if(e)e.textContent='…';});
+if(window.location.protocol!=='file:'){
+  fetch('https://api.github.com/users/Nutricalboii')
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.json();
+    })
+    .then(function(d){
+      var animCount=function(el,val){
+        if(!el) return; var cur=0;
+        var step=function(){cur=Math.min(cur+1,val); el.textContent=cur; if(cur<val) requestAnimationFrame(step);};
+        requestAnimationFrame(step);
+      };
+      animCount(document.getElementById('tel-repos'),d.public_repos||0);
+      animCount(document.getElementById('tel-follow'),d.followers||0);
+      animCount(document.getElementById('gh-repos'),d.public_repos||0);
+      animCount(document.getElementById('gh-follow'),d.followers||0);
+      if(d.created_at){
+        var yr=Math.max(1,Math.floor((Date.now()-new Date(d.created_at))/(365.25*864e5)));
+        var a=document.getElementById('tel-age'); if(a) a.textContent=yr+'y';
+      }
+    }).catch(function(){
+      ghIds.forEach(function(id){
+        var e=document.getElementById(id);
+        if(e){e.textContent='—';e.title='GitHub API unavailable';}
+      });
     });
+  fetch('https://github.com/users/Nutricalboii/contributions')
+    .then(function(r){return r.text()})
+    .then(function(html){
+      var match=html.match(/(\d+)\s*contributions/);
+      if(match){
+        var count=match[1];
+        var el=document.getElementById('tel-contribs');
+        if(el) el.textContent=count;
+        var ghEl=document.getElementById('gh-contribs');
+        if(ghEl) ghEl.textContent=count;
+      }
+    }).catch(function(){});
+} else {
+  ghIds.forEach(function(id){
+    var e=document.getElementById(id);
+    if(e) e.textContent='—';
   });
-fetch('https://github.com/users/Nutricalboii/contributions')
-  .then(r=>r.text())
-  .then(html=>{
-    const match=html.match(/(\d+)\s*contributions/);
-    if(match){
-      const count=match[1];
-      const el=document.getElementById('tel-contribs');
-      if(el) el.textContent=count;
-      const ghEl=document.getElementById('gh-contribs');
-      if(ghEl) ghEl.textContent=count;
-    }
-  }).catch(()=>{});
+}
   });
 
 /* ════════════════════════════════════
    COMMIT GRAPH
 ════════════════════════════════════ */
 (function(){
+  try{
   const g=document.getElementById('cgraph'); if(!g) return;
   const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const DAYS=['','Mon','','Wed','','Fri',''];
@@ -1828,23 +1836,25 @@ fetch('https://github.com/users/Nutricalboii/contributions')
     html+='</div></div><div class="cgraph-legend">Less <div class="cgraph-legend-cell" style="background:var(--line2)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.22)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.42)"></div><div class="cgraph-legend-cell" style="background:rgba(111,207,151,.66)"></div><div class="cgraph-legend-cell" style="background:var(--green)"></div> More</div>';
     g.innerHTML=html;
   }
-  fetch('https://github.com/users/Nutricalboii/contributions')
-    .then(r=>r.text())
-    .then(html=>{
-      const parser=new DOMParser();
-      const doc=parser.parseFromString(html,'text/html');
-      const cells=doc.querySelectorAll('.ContributionCalendar-day');
-      const levels=[];
-      cells.forEach(cell=>{
-        const level=cell.getAttribute('data-level');
-        if(level!==null) levels.push(parseInt(level));
-      });
-      if(levels.length>0) renderGraph(levels);
-      else renderGraph([0,0,1,0,2,0,1,3,0,0,2,1,0,0,3,2,1,0,4,0,2,1,0,3,1,0,2,0,0,4,3,1,0,2,0,1,4,2,0,0,1,3,0,2,4,1,0,0,3,2,1,4,0,0,2,1,3,0,4,2,0,1,0,3,1,2,4,0,1,3,0,2,1,0,4,2,1,0,3,0,1,2,4,0,2,1,3,0,4,0,2,0,1,3,4,0,2,0,1,3]);
-    })
-    .catch(()=>{
-      renderGraph([0,0,1,0,2,0,1,3,0,0,2,1,0,0,3,2,1,0,4,0,2,1,0,3,1,0,2,0,0,4,3,1,0,2,0,1,4,2,0,0,1,3,0,2,4,1,0,0,3,2,1,4,0,0,2,1,3,0,4,2,0,1,0,3,1,2,4,0,1,3,0,2,1,0,4,2,1,0,3,0,1,2,4,0,2,1,3,0,4,0,2,0,1,3,4,0,2,0,1,3]);
-    });
+  const fb=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,3,1,0,1,1,1,1,1,0,1,1,1,2,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,1,2,1,1,1,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,1,1,4,1,2,1,1,1,1,1,1,1,3,1,1,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,3,1,2,1,1,1,1,1,1,1,1,2,1,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,2,1,1,0,1,1,0,2,1,0,4,1,1,1,1,0,1,2,3,4];
+  renderGraph(fb);
+  if(window.location.protocol!=='file:'){
+    fetch('https://github.com/users/Nutricalboii/contributions')
+      .then(function(r){return r.text()})
+      .then(function(h){
+        var p=new DOMParser();
+        var d=p.parseFromString(h,'text/html');
+        var cells=d.querySelectorAll('.ContributionCalendar-day');
+        var lv=[];
+        cells.forEach(function(c){
+          var l=c.getAttribute('data-level');
+          if(l!==null) lv.push(parseInt(l));
+        });
+        if(lv.length>0) renderGraph(lv);
+      })
+      .catch(function(){});
+  }
+  }catch(e){}
 })();
 
 /* ════════════════════════════════════
