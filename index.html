@@ -1298,8 +1298,106 @@ footer {
         </div>
       </div>
     </div>
+
+    <div class="sec" style="margin-top:56px;">
+      <div class="sec-head reveal">
+        <h2>ls ~/projects</h2>
+        <p>Pulled live from GitHub. Everything public and worth linking to.</p>
+      </div>
+      <div id="repo-grid" class="repo-grid reveal reveal-d1"></div>
+      <a class="repo-more reveal reveal-d2" href="https://github.com/Nutricalboii" target="_blank" rel="noopener">See all repos on GitHub ↗</a>
+    </div>
   </div>
 </section>
+
+<style>
+.repo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:12px;
+  margin-top:22px;
+}
+.repo-card{
+  background:var(--bg2);
+  border:1px solid var(--line);
+  border-radius:var(--r2);
+  padding:18px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  transition:border-color .18s,transform .18s,box-shadow .18s;
+  text-decoration:none;
+  color:inherit;
+}
+.repo-card:hover{
+  border-color:var(--amber3);
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(0,0,0,.4);
+}
+.repo-card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+.repo-card-name{
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:600;
+  color:var(--amber);
+  word-break:break-word;
+}
+.repo-card-arr{
+  color:var(--faint);
+  font-size:14px;
+  flex-shrink:0;
+  margin-top:1px;
+  transition:color .15s;
+}
+.repo-card:hover .repo-card-arr{ color:var(--amber); }
+.repo-card-desc{
+  font-size:12.5px;
+  color:var(--dim);
+  line-height:1.65;
+  flex:1;
+}
+.repo-card-foot{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:4px;
+}
+.repo-lang{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--faint);
+  background:var(--bg3);
+  padding:3px 8px;
+  border-radius:20px;
+  border:1px solid var(--line);
+}
+.repo-stars{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--faint);
+}
+.repo-more{
+  display:inline-block;
+  margin-top:18px;
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--dim);
+  border:1px solid var(--line);
+  padding:8px 16px;
+  border-radius:var(--r);
+  transition:color .15s,border-color .15s;
+}
+.repo-more:hover{ color:var(--amber); border-color:var(--amber3); }
+@media(max-width:640px){
+  .repo-grid{ grid-template-columns:1fr; }
+}
+</style>
+
 
 <!-- ════════════════ WORK ════════════════ -->
 <section class="page" data-p="/work" aria-label="Work">
@@ -1928,6 +2026,62 @@ if(!isLocal){
   document.getElementById('gh-follow').textContent='—';
   document.getElementById('gh-contribs').textContent='952';
   var a=document.getElementById('tel-age'); if(a) a.textContent='1y';
+}
+
+/* ────── REPOS GRID ────── */
+var REPO_SKIP=['nutricalboii.github.io','Nutricalboii','Avora'];
+var REPO_DESC={
+  'loq-control':      'Hardware control suite for the Lenovo LOQ on Linux. What started as a midnight GPU-switching script became a 6-release, MIT-licensed tool. Lenovo never shipped this — so I did.',
+  'vaelix-os':        'My own Linux distro. Ubuntu 24.04 base, KDE Plasma 6, XanMod kernel with BORE scheduler. 13 rebuilds before a clean first boot. v2.0 in progress.',
+  'android_device_motorola_potter': 'Device tree for LineageOS 20 (Android 13) on the Moto G5 Plus. Official support stopped at Android 8.1. I kept going.',
+  'android_vendor_motorola_potter': 'Vendor blobs and proprietary files for the Moto G5 Plus bring-up — extracted, cleaned, and adapted for LineageOS 20.',
+  'android_kernel_motorola_msm8953':'Linux 3.18 kernel source for the Snapdragon 625 (MSM8953). Base for the Android 13 bring-up on potter.',
+  'android_build_patches_potter':   'Build system patches for the AOSP/LineageOS tree to compile cleanly for the MSM8953 / Linux 3.18 stack.',
+  'orangefox_potter_tree':          'OrangeFox recovery device tree for the Moto G5 Plus — custom recovery support as part of the Android bring-up work.',
+  'scholarsync':      'Multi-document RAG study tool. Answer queries across an entire PDF library with page-level citations. Built in 24 hours, won Google GDSC TechSprint.',
+  'notum':            'Zero-knowledge note vault. AES-256-GCM client-side encryption before anything hits the backend — the server never sees plaintext.',
+  'vitalis-fitness-tracker': 'Health tracker with two integrations done properly: Google Fit and Fitbit. Deliberately scoped small.',
+  'SMASH':            'Plays a sound when someone physically smacks your laptop. Detects the acoustic signature, filters out speech and background noise. Completely pointless. Built it at 2am.',
+  'ADYA':             'Desktop AI assistant built with PyQt5 and Gemini API. Voice recognition, TTS, Spotify controls, system widgets. My first big Python GUI project.',
+  'sovereign-plate':  'Full-stack restaurant platform for a luxury hospitality client. MongoDB, Node/Express, Twilio SMS, deployed on Render + Netlify.',
+  'Sharma-Digital-X-Ray-Lab': 'React 19 + Firebase frontend for a real medical imaging business. Bilingual EN/HI. Real users.',
+  'Disaster-Response-OpenEnv':'Meta AI Hackathon project. Disaster response coordination platform. Team Singularity. Perfect score.',
+  'Telegram-Affiliate-Bot':   'Python (Telethon) + Node.js dual-runtime affiliate bot. Monetises merchant links via the Cuelinks API before forwarding.',
+};
+var LANG_COLOR={
+  'Python':'#3572A5','TypeScript':'#3178c6','JavaScript':'#f7df1e',
+  'C++':'#f34b7d','C':'#555555','Shell':'#89e051',
+  'Makefile':'#427819','HTML':'#e34c26','Java':'#b07219',
+};
+function renderRepos(repos){
+  var grid=document.getElementById('repo-grid'); if(!grid) return;
+  var filtered=repos.filter(function(r){
+    return !REPO_SKIP.includes(r.name) && !r.fork && !r.archived;
+  }).slice(0,12);
+  if(!filtered.length){ grid.style.display='none'; return; }
+  grid.innerHTML=filtered.map(function(r){
+    var desc=REPO_DESC[r.name]||r.description||'No description yet.';
+    var lang=r.language||'';
+    var col=LANG_COLOR[lang]||'#888';
+    var stars=r.stargazers_count>0?'★ '+r.stargazers_count:'';
+    return '<a class="repo-card" href="'+r.html_url+'" target="_blank" rel="noopener">'+
+      '<div class="repo-card-top">'+
+        '<div class="repo-card-name">'+r.name+'</div>'+
+        '<div class="repo-card-arr">↗</div>'+
+      '</div>'+
+      '<div class="repo-card-desc">'+desc+'</div>'+
+      '<div class="repo-card-foot">'+
+        (lang?'<span class="repo-lang"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+col+';margin-right:5px;vertical-align:middle;"></span>'+lang+'</span>':'')+
+        (stars?'<span class="repo-stars">'+stars+'</span>':'')+
+      '</div>'+
+    '</a>';
+  }).join('');
+}
+if(!isLocal){
+  fetch('https://api.github.com/users/Nutricalboii/repos?sort=pushed&per_page=30')
+    .then(function(r){ return r.ok?r.json():Promise.reject(); })
+    .then(renderRepos)
+    .catch(function(){ var g=document.getElementById('repo-grid'); if(g) g.style.display='none'; });
 }
 
 /* ════════════════════════════════════
