@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaibhav Sharma — Systems Engineer</title>
+<title>Vaibhav Sharma — Systems Builder</title>
 <meta name="description" content="Vaibhav Sharma — systems builder. Linux distros, hardware reverse-engineering, Android bring-up. I build the layer most developers never touch.">
 <meta name="theme-color" content="#090908">
 <meta name="robots" content="index, follow">
@@ -11,7 +11,7 @@
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vaibhav Sharma — Systems Engineer">
+<meta property="og:title" content="Vaibhav Sharma — Systems Builder">
 <meta property="og:description" content="Vaibhav Sharma — systems builder. Linux distros, hardware reverse-engineering, Android bring-up. I build the layer most developers never touch.">
 <meta property="og:image" content="https://nutricalboii.github.io/og-image.png">
 <meta property="og:url" content="https://nutricalboii.github.io/">
@@ -19,7 +19,7 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vaibhav Sharma — Systems Engineer">
+<meta name="twitter:title" content="Vaibhav Sharma — Systems Builder">
 <meta name="twitter:description" content="Vaibhav Sharma — systems builder. Linux distros, hardware reverse-engineering, Android bring-up. I build the layer most developers never touch.">
 <meta name="twitter:image" content="https://nutricalboii.github.io/og-image.png">
 
@@ -1095,6 +1095,7 @@ footer {
         <div class="tele-row"><span>account age</span><b id="tel-age">—</b></div>
         <div class="tele-row"><span>current build</span><b>vaelix-os v2.0</b></div>
         <div class="tele-row"><span>status</span><b class="lv">available</b></div>
+        <div class="tele-row"><span>experience</span><b>Codec Technologies (Full-Stack)</b></div>
         <div class="tele-row"><span>open to</span><b>internships · hard problems</b></div>
       </div>
     </div>
@@ -1124,7 +1125,7 @@ footer {
           &nbsp;&nbsp;README.md — Nutricalboii/Nutricalboii
         </div>
         <div class="readme-body">
-          <p style="color:var(--dim);font-size:13.5px;">Systems builder. B.Tech CSE, DIT University (2027). I follow equity markets. I think about systems at 2am. I break things on purpose to see what holds.</p>
+          <p style="color:var(--dim);font-size:13.5px;">Systems builder. B.Tech CSE, DIT University (2027). CS50x HarvardX graduate. Head of Public Relations at CSI DIT (900+ member technical chapter). I follow equity markets. I think about systems at 2am. I break things on purpose to see what holds.</p>
           <div class="readme-quote">"I experiment where theory meets hardware, build where failure is possible, and use AI as a tool — because systems that survive reality are never accidental."</div>
           <p style="color:var(--dim);font-size:13.5px;">My real interest isn't software specifically — it's beautifully designed systems. Software just happens to be today's medium. The curiosity stays the same; the domain shifts.</p>
           <div class="readme-stats">
@@ -1132,6 +1133,8 @@ footer {
             <div class="rs"><b id="gh-follow" class="count-up">…</b><span>followers</span></div>
             <div class="rs"><b>5+</b><span>languages</span></div>
             <div class="rs"><b>6</b><span>LOQ releases</span></div>
+            <div class="rs"><b>CS50x</b><span>HarvardX</span></div>
+            <div class="rs"><b>1</b><span>Google GDSC winner</span></div>
           </div>
           <div class="cgraph-wrap">
             <div class="cgraph-label">Commit activity — loq-control (last 52 weeks)</div>
@@ -1198,7 +1201,7 @@ footer {
           <div>
             <div class="case-meta"><span class="pill live">production · v2.0.2</span><span>·</span><span>Python · GTK4 · systemd · Polkit</span><span>·</span><span>MIT</span></div>
             <h3>LOQ Control Center</h3>
-            <div class="case-sub">Lenovo never shipped this. So I built it. Started as a GPU-switching script at midnight, became a production-grade hardware control suite with 6 releases.</div>
+            <div class="case-sub">Lenovo never shipped this. So I built it. Started as a GPU-switching script at midnight, became a production-grade hardware control suite with 6 releases. Switched to Linux and ended up reverse-engineering my own laptop in two weeks.</div>
           </div>
           <div class="chev">→</div>
         </div>
@@ -1206,13 +1209,13 @@ footer {
           <div class="ci">
             <div class="ci-l">
               <h4>Why this exists</h4>
-              <p>Linux users on Lenovo LOQ had no unified way to manage thermal profiles, GPU switching, or power limits. Options were fragmented shell scripts or direct EC manipulation — every mistake risked real hardware damage. That's not a software problem, that's a safety problem.</p>
-              <h4>How it grew</h4>
-              <p>Started as a GPU-switching script at midnight because Linux took something that should have worked and didn't. Over 6 versioned releases: systemd daemon, adaptive thermal policy engine, Polkit-gated privilege model (zero sudo, ever), GTK4 GUI with 7-point Cairo fan curve editor. The architecture separated UI from hardware interfaces in v2 — should have started that way.</p>
+              <p>On Windows everything felt polished and ready-made. On Linux I suddenly lost direct control over my own hardware. That gap pushed me to explore kernel power layers, firmware behaviour, and hidden system interfaces. Instead of waiting for solutions, I started building my own.</p>
+              <h4>The v1 → v2 story</h4>
+              <p>v1.0 had a fundamental flaw — it was writing directly to ACPI sysfs via pkexec, which meant every profile switch spawned an authentication prompt that hid behind the app window. Users couldn't see it. Hardware writes silently failed. The UI froze and never recovered. That's not a UX bug. That's a trust violation. Fixed it at the root.</p>
+              <h4>What v2 actually does</h4>
+              <p>Fedora-native power management via powerprofilesctl (D-Bus, no pkexec). 4-profile system matching Lenovo LOQ hardware: Quiet/Balanced/Performance/Custom — CPU PL1/PL2 via RAPL, GPU cTGP via nvidia-smi. Fn+Q keyboard sync via 1-second sysfs poll. GPU mode switching via envycontrol with prime-select fallback. Rewrote the sensor stack to read directly from /sys/class/hwmon — killed ~300 stderr lines per minute. UI state machine hardened against race conditions.</p>
               <h4>What I learned</h4>
               <p>Linux hardware management at kernel level — ACPI, EC communication, sysfs power nodes. Security-first privilege escalation via pkexec. The real gap between a script that works once and software others can depend on. User-facing errors still surface some raw hardware codes — that's the next pass.</p>
-              <h4>What I'd change</h4>
-              <p>v1 mixed UI with hardware interfaces. v2 separated them cleanly — I'd start that way. The architecture was right from the start; I just didn't know it yet.</p>
               <div class="code-block">
                 <div class="cb-bar"><span>loq-control.service</span><span class="cb-lang">systemd unit</span></div>
                 <pre class="cb-code"><span class="cm"># /etc/systemd/system/loq-control.service</span>
@@ -1257,7 +1260,7 @@ footer {
               </div>
             </div>
             <div>
-              <div class="side-box"><div class="k">key features</div><div class="rlist"><div>Zero-sudo GUI — Polkit / pkexec only</div><div>Adaptive thermal policy engine</div><div>iGPU / Hybrid / dGPU switching</div><div>CPU PL1/PL2 + GPU cTGP control</div><div>7-point Cairo fan curve editor</div><div>Hardware "deadman switch"</div><div>systemd daemon + boot automation</div></div></div>
+              <div class="side-box"><div class="k">key features</div><div class="rlist"><div>Zero-sudo GUI — Polkit / pkexec only</div><div>Adaptive thermal policy engine</div><div>iGPU / Hybrid / dGPU switching</div><div>CPU PL1/PL2 + GPU cTGP control</div><div>7-point Cairo fan curve editor</div><div>Hardware "deadman switch"</div><div>systemd daemon + boot automation</div><div>Fn+Q hardware profile sync</div></div></div>
               <div class="side-box"><div class="k">numbers</div><div class="mono" style="font-size:12px;color:var(--dim);">6 releases · 40+ commits · MIT<br>github.com/Nutricalboii/loq-control</div></div>
             </div>
           </div>
@@ -1361,11 +1364,13 @@ footer {
 
       <div class="minor-wrap reveal">
         <div class="minor-eye">// shipped, not padded</div>
+        <div class="minor"><div class="ml">SMASH for Linux <span class="d2">— plays a sound when someone smacks your laptop. Completely unnecessary. Precisely why I built it.</span></div><div class="mr">shipped</div></div>
         <div class="minor"><div class="ml">Notum <span class="d2">— zero-knowledge vault. Client-side AES-256-GCM. The server never sees plaintext.</span></div><div class="mr">shipped</div></div>
         <div class="minor"><div class="ml">The Sovereign Plate <span class="d2">— Node/Express/MongoDB/Twilio. Real client-facing product, not a demo.</span></div><div class="mr">live</div></div>
         <div class="minor"><div class="ml">Sharma Digital X-Ray Lab <span class="d2">— React 19 + Firebase. Bilingual EN/HI. Real business, real users.</span></div><div class="mr">live</div></div>
         <div class="minor"><div class="ml">Disaster-Response-OpenEnv <span class="d2">— Meta AI Hackathon. Team Singularity. Perfect score.</span></div><div class="mr">hackathon</div></div>
-        <div class="minor"><div class="ml">ADYA <span class="d2">— PyQt5 + Gemini API. Desktop AI assistant.</span></div><div class="mr">shipped</div></div>
+        <div class="minor"><div class="ml">ADYA <span class="d2">— PyQt5 + Gemini API. Desktop AI assistant with voice recognition.</span></div><div class="mr">shipped</div></div>
+        <div class="minor"><div class="ml">Telegram Affiliate Bot <span class="d2">— Python Telethon + Node.js dual-runtime. Cuelinks API integration.</span></div><div class="mr">shipped</div></div>
         <div class="minor"><div class="ml">Vitalis <span class="d2">— Health tracker. Scoped to exactly two integrations on purpose — Google Fit + Fitbit.</span></div><div class="mr">building</div></div>
       </div>
     </div>
@@ -1564,22 +1569,28 @@ footer {
       <div class="log-entry reveal">
         <div class="log-date">2026-06-28</div>
         <div class="log-title">Why LOQ v2 separated UI from hardware interfaces</div>
-        <div class="log-body">v1 had a monolithic class handling both GTK4 widget events and sysfs writes. When I added the 7-point fan curve editor, Cairo draw callbacks were tangled with hardware writes — impossible to test the UI without hardware attached. v2 uses clean D-Bus: GTK4 sends structured calls, the systemd daemon handles hardware. GUI is now testable offline. Should have started this way. The architecture was right; I just didn't know it yet.</div>
+        <div class="log-body">v1 had a fundamental flaw — it was writing directly to ACPI sysfs via pkexec, which meant every profile switch spawned an authentication prompt that hid behind the app window. Users couldn't see it. Hardware writes silently failed. The UI froze and never recovered. That's not a UX bug. That's a trust violation. Fixed it at the root: v2 uses powerprofilesctl over D-Bus as a normal user. No pkexec. No auth prompt. Instant, reliable profile switching.</div>
         <div class="log-tags"><span class="log-tag">LOQ Control</span><span class="log-tag">Architecture</span><span class="log-tag">systemd</span></div>
       </div>
       <div class="log-entry reveal reveal-d1">
+        <div class="log-date">2026-06-15</div>
+        <div class="log-title">SMASH for Linux: building things because you can't stop thinking about them</div>
+        <div class="log-body">Saw a reel where a Mac played a sound when someone hit it. Naturally wondered why macOS should have all the fun. Built SMASH for Ubuntu/Linux — listens for the sound signature of someone physically smacking their laptop and plays a reaction sound while ignoring speech and background noise. A completely unnecessary project, which is precisely why I built it. The green squares on the GitHub graph were what got me started. Somewhere along the way, it became about building things simply because I couldn't stop thinking about them.</div>
+        <div class="log-tags"><span class="log-tag">SMASH</span><span class="log-tag">Audio</span><span class="log-tag">Python</span></div>
+      </div>
+      <div class="log-entry reveal reveal-d2">
         <div class="log-date">2026-06-14</div>
         <div class="log-title">Android bring-up: what "device can't be trusted" actually means</div>
         <div class="log-body">Spent two weeks thinking this was a key signing problem. It isn't — it's a verified boot chain issue. The bootloader checks signatures on the boot image, but the OEM hash of the device tree doesn't match what LineageOS expects. Four approaches: (1) test-key signing via avbtool, (2) dm-verity disable, (3) custom bootloader, (4) Magisk delta patch. Trying (1). If that fails, (3) — which means a custom bootloader flash, risky since Motorola's tool doesn't expose enough control. Dead ends are proof you explored.</div>
         <div class="log-tags"><span class="log-tag">Android</span><span class="log-tag">Bootloader</span><span class="log-tag">MSM8953</span></div>
       </div>
-      <div class="log-entry reveal reveal-d2">
+      <div class="log-entry reveal reveal-d3">
         <div class="log-date">2026-05-30</div>
         <div class="log-title">Vaelix v1.1: the 13 rebuilds — what failed and why</div>
         <div class="log-body">Rebuilds 1-3: kernel version incompatibility with SDDM's DRM interface. Rebuilds 4-6: XanMod flags that break hibernation on Intel + NVME power states. Rebuilds 7-10: Cairo/Pango font rendering mismatch visible only after first login. Rebuilds 11-13: sysfs power management changes between kernel minor versions. Lesson: lock your kernel minor version in the build config before spending a week debugging display issues. The 13 number is the whole story, but the specific reasons are where the learning lives.</div>
         <div class="log-tags"><span class="log-tag">Vaelix OS</span><span class="log-tag">Linux Kernel</span><span class="log-tag">XanMod</span></div>
       </div>
-      <div class="log-entry reveal reveal-d3">
+      <div class="log-entry reveal reveal-d4">
         <div class="log-date">2026-05-12</div>
         <div class="log-title">ScholarSync: why batch over streaming was right for the hackathon</div>
         <div class="log-body">Streaming Gemini through FastAPI requires SSE or WebSocket on both ends. Getting that right in a 24-hour window while also building the knowledge graph and flashcard system wasn't realistic. Batch was simpler, testable, and shipped. Tradeoff: 4-8 second wait on large queries. Post-hackathon: streaming is the obvious next step. But shipping batch and winning was better than not shipping streaming.</div>
@@ -1604,7 +1615,7 @@ footer {
       <div class="reveal reveal-d2">
         <a class="lcard" href="mailto:vaibhav282227@gmail.com"><div><div class="lcard-name">Email</div><div class="lcard-sub">vaibhav282227@gmail.com</div></div><div class="lcard-arr">↗</div></a>
         <a class="lcard" href="https://www.linkedin.com/in/vaibsharma86" target="_blank" rel="noopener"><div><div class="lcard-name">LinkedIn</div><div class="lcard-sub">vaibsharma86</div></div><div class="lcard-arr">↗</div></a>
-        <a class="lcard" href="https://github.com/Nutricalboii" target="_blank" rel="noopener"><div><div class="lcard-name">GitHub</div><div class="lcard-sub">Nutricalboii · 27+ repos</div></div><div class="lcard-arr">↗</div></a>
+        <a class="lcard" href="https://github.com/Nutricalboii" target="_blank" rel="noopener"><div><div class="lcard-name">GitHub</div><div class="lcard-sub">Nutricalboii</div></div><div class="lcard-arr">↗</div></a>
       </div>
     </div>
   </div>
@@ -1993,8 +2004,11 @@ const FS={'~':{_d:1,
   'status.json':{_f:1,_c:`{\n  "name": "Vaibhav Sharma",\n  "building": "vaelix-os v2.0",\n  "mood": "debugging bootloader trust chain",\n  "location": "Dehradun, India",\n  "university": "DIT University (2027)",\n  "role": "Head of PR, CSI DIT (900+ members)",\n  "open_to": ["internships","collaborations","hard problems"],\n  "philosophy": "systems that survive reality are never accidental",\n  "status": "available"\n}`},
   'stack.json':{_f:1,_c:`{\n  "systems": ["Linux","systemd","Polkit","GTK4","ACPI","Android AOSP"],\n  "languages": ["Python","TypeScript","C/C++","Bash","Java"],\n  "web": ["Next.js","FastAPI","Gemini","ChromaDB","MongoDB"],\n  "tools": ["Git","Docker","Vercel","Electron","WebCrypto"]\n}`},
   'projects':{_d:1,
+    'smash':{_d:1,
+      'README.md':{_f:1,_c:`# SMASH for Linux\n\nPlays a sound when someone smacks your laptop.\nDetects the sound signature of a physical smack,\nignores speech and background noise.\n\n"Completely unnecessary, which is precisely\nwhy I built it."\n\nStack: Python, audio classification, ALSA`},
+    },
     'loq-control':{_d:1,
-      'README.md':{_f:1,_c:`# LOQ Control Center v2.0.2\n\nHardware control suite for Lenovo LOQ on Linux.\nStarted as a GPU-switching script at midnight.\nBecame production-grade over 6 releases.\n\n"Lenovo never shipped this. So I built it."\n\ngithub.com/Nutricalboii/loq-control`},
+      'README.md':{_f:1,_c:`# LOQ Control Center v2.0.2\n\nHardware control suite for Lenovo LOQ on Linux.\nStarted as a GPU-switching script at midnight.\nBecame production-grade over 6 releases.\n\nv1 had a trust violation — silent hardware failures.\nv2 fixed it at the root.\n\ngithub.com/Nutricalboii/loq-control`},
       'loq_control.py':{_f:1,_c:`#!/usr/bin/env python3\n# LOQ Control — thermal policy engine\n\ndef apply_thermal_policy(profile):\n    """Apply via Polkit — no root needed."""\n    proxy = bus.get_object(\n        'com.vaibhav.loqcontrol',\n        '/com/vaibhav/loqcontrol/Thermal'\n    )\n    iface = dbus.Interface(proxy, 'com.vaibhav.loqcontrol.Thermal')\n    iface.SetProfile(profile.name, profile.pl1, profile.pl2)`},
       'loq-control.service':{_f:1,_c:`[Unit]\nDescription=LOQ Hardware Control Daemon\nAfter=multi-user.target dbus.service\n\n[Service]\nType=dbus\nBusName=com.vaibhav.loqcontrol\nExecStart=/usr/bin/python3 /usr/lib/loq-control/daemon.py\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target`},
     },
