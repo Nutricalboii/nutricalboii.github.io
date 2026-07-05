@@ -1256,7 +1256,7 @@ footer {
     <div class="sec">
       <div class="sec-head reveal">
         <h2>systemctl list-units --active</h2>
-        <p>What's actually running. Not a highlight reel.</p>
+        <p>Active processes and system status.</p>
       </div>
       <div class="unit reveal reveal-d1"><div class="unit-l"><span class="sdot prog"></span><div><div class="unit-name">vaelix-os.service</div><div class="unit-desc">Custom Linux distro — v2.0 "Renaissance" in progress. Wayland migration + Rust core tooling.</div></div></div><div class="unit-tag">in-development</div></div>
       <div class="unit reveal reveal-d2"><div class="unit-l"><span class="sdot live"></span><div><div class="unit-name">loq-control.service</div><div class="unit-desc">Hardware control suite for Lenovo LOQ on Linux — reverse-engineered from scratch. 6 releases, MIT.</div></div></div><div class="unit-tag">production</div></div>
@@ -1325,7 +1325,7 @@ footer {
           <div>
             <div class="case-meta"><span class="pill prog">in development</span><span>·</span><span>Linux Distribution</span><span>·</span><span>13 rebuilds to first clean boot</span></div>
             <h3>Vaelix OS</h3>
-            <div class="case-sub">Stock distros make tradeoffs for everyone. I made one that makes tradeoffs for me. Ubuntu 24.04 base, KDE Plasma 6, XanMod kernel — 13 rebuilds to get it right.</div>
+            <div class="case-sub">A Linux distribution tailored around my daily workflow. Ubuntu 24.04 base, KDE Plasma 6, XanMod kernel — 13 rebuilds to get it right.</div>
           </div>
           <div class="chev">→</div>
         </div>
@@ -1333,7 +1333,7 @@ footer {
           <div class="ci">
             <div class="ci-l">
               <h4>Why this exists</h4>
-              <p>Every fresh install of Ubuntu means undoing defaults I don't want, fighting package conflicts, and rebuilding my workflow from scratch. I wanted a distro that starts where I actually work — not where Canonical thinks I should.</p>
+              <p>Every fresh install of Ubuntu means undoing defaults I don't want, fighting package conflicts, and rebuilding my workflow from scratch. I wanted a distro tailored to my exact daily workflow rather than default Canonical choices.</p>
               <h4>How I built it</h4>
               <p>Ubuntu 24.04 LTS base. KDE Plasma 6 — the one DE that's both feature-complete and scriptable. XanMod kernel with BORE scheduler, BBR2 TCP. First clean boot took 13 rebuilds. Most weren't dramatic failures — they were config drift between kernel and DE layers that only showed up after first login. Lesson: lock your kernel minor version before spending a week debugging display issues.</p>
               <h4>Where it is now</h4>
@@ -1363,9 +1363,9 @@ footer {
           <div class="ci">
             <div class="ci-l">
               <h4>Why this exists</h4>
-              <p>On Windows everything felt polished and ready-made. On Linux I suddenly lost direct control over my own hardware. That gap pushed me to explore kernel power layers, firmware behaviour, and hidden system interfaces. Instead of waiting for solutions, I started building my own.</p>
+              <p>Transitioning to Linux meant managing hardware power and thermal layers directly. This gap pushed me to explore kernel power layers, firmware behaviour, and hidden system interfaces. Instead of waiting for solutions, I started building my own.</p>
               <h4>The v1 → v2 story</h4>
-              <p>v1.0 had a fundamental flaw — it was writing directly to ACPI sysfs via pkexec, which meant every profile switch spawned an authentication prompt that hid behind the app window. Users couldn't see it. Hardware writes silently failed. The UI froze and never recovered. That's not a UX bug. That's a trust violation. Fixed it at the root.</p>
+              <p>v1.0 had a fundamental flaw — it was writing directly to ACPI sysfs via pkexec, which meant every profile switch spawned an authentication prompt that hid behind the app window. Users couldn't see it. Hardware writes silently failed. The UI froze and never recovered. This was a critical security design flaw that I resolved at the kernel interface level.</p>
               <h4>What v2 actually does</h4>
               <p>Fedora-native power management via powerprofilesctl (D-Bus, no pkexec). 4-profile system matching Lenovo LOQ hardware: Quiet/Balanced/Performance/Custom — CPU PL1/PL2 via RAPL, GPU cTGP via nvidia-smi. Fn+Q keyboard sync via 1-second sysfs poll. GPU mode switching via envycontrol with prime-select fallback. Rewrote the sensor stack to read directly from /sys/class/hwmon — killed ~300 stderr lines per minute. UI state machine hardened against race conditions.</p>
               <h4>What I learned</h4>
@@ -1475,7 +1475,7 @@ footer {
           <div>
             <div class="case-meta"><span class="pill live">live · hackathon winner</span><span>·</span><span>Next.js 14 · FastAPI · ChromaDB · Gemini 2.0</span></div>
             <h3>ScholarSync</h3>
-            <div class="case-sub">Built in 24 hours for Google GDSC TechSprint. Multi-document RAG that answers with citations across an entire library — not one PDF at a time. Won the hackathon.</div>
+            <div class="case-sub">Built in 24 hours for Google GDSC TechSprint. Multi-document RAG that answers queries by synthesizing context across an entire library simultaneously. Won the hackathon.</div>
           </div>
           <div class="chev">→</div>
         </div>
@@ -1489,7 +1489,7 @@ footer {
               <h4>What I learned</h4>
               <p>RAG pipeline design from first principles — chunking strategy, embedding model choice, semantic search, structured JSON output from LLMs. How citation (not confident assertion) is what makes AI trustworthy. The performance tradeoffs between vector search accuracy and query latency.</p>
               <h4>What I'd change</h4>
-              <p>Knowledge graph nodes should open an exploration panel, not another AI call. Stream responses from day one — batch was right for the hackathon, wrong for production. Shipping batch and winning was better than not shipping streaming.</p>
+              <p>Knowledge graph nodes should open an exploration panel directly. I also plan to transition to streaming responses instead of the batch pipeline built for the hackathon. Opting for batch allowed us to ship a stable build within the 24-hour hackathon window.</p>
               <div class="code-block">
                 <div class="cb-bar"><span>rag_pipeline.py</span><span class="cb-lang">Python / FastAPI</span></div>
                 <pre class="cb-code"><span class="kw">async def</span> <span class="fn">query_library</span>(q: <span class="nb">str</span>, top_k: <span class="nb">int</span> <span class="op">=</span> <span class="am">5</span>) <span class="op">-></span> <span class="nb">QueryResult</span>:
@@ -1517,10 +1517,10 @@ footer {
       </div>
 
       <div class="minor-wrap reveal">
-        <div class="minor-eye">// shipped, not padded</div>
+        <div class="minor-eye">// completed utilities and smaller builds</div>
         <div class="minor"><div class="ml">SMASH for Linux <span class="d2">— plays a sound when someone smacks your laptop. Completely unnecessary. Precisely why I built it.</span></div><div class="mr">shipped</div></div>
         <div class="minor"><div class="ml">Notum <span class="d2">— zero-knowledge vault. Client-side AES-256-GCM. The server never sees plaintext.</span></div><div class="mr">shipped</div></div>
-        <div class="minor"><div class="ml">The Sovereign Plate <span class="d2">— Node/Express/MongoDB/Twilio. Real client-facing product, not a demo.</span></div><div class="mr">live</div></div>
+        <div class="minor"><div class="ml">The Sovereign Plate <span class="d2">— Node/Express/MongoDB/Twilio. Deployed client platform managing active table bookings.</span></div><div class="mr">live</div></div>
         <div class="minor"><div class="ml">Sharma Digital X-Ray Lab <span class="d2">— React 19 + Firebase. Bilingual EN/HI. Real business, real users.</span></div><div class="mr">live</div></div>
         <div class="minor"><div class="ml">Disaster-Response-OpenEnv <span class="d2">— Meta AI Hackathon. Team Singularity. Perfect score.</span></div><div class="mr">hackathon</div></div>
         <div class="minor"><div class="ml">ADYA <span class="d2">— PyQt5 + Gemini API. Desktop AI assistant with voice recognition.</span></div><div class="mr">shipped</div></div>
@@ -1537,7 +1537,7 @@ footer {
     <div class="reveal">
       <div class="eyebrow">SEC.03</div>
       <h2 class="mono" style="font-size:32px;font-weight:700;">The workbench.</h2>
-      <p style="color:var(--dim);margin-top:10px;max-width:540px;font-size:13.5px;line-height:1.75;">Not a skill list. Only tools I'd defend in an interview. Tiers mark how central each one is.</p>
+      <p style="color:var(--dim);margin-top:10px;max-width:540px;font-size:13.5px;line-height:1.75;">Categorized by frequency of use and level of systems integration.</p>
     </div>
     <div class="sgrid reveal reveal-d1">
       <div class="scat">
@@ -1655,7 +1655,7 @@ footer {
     <div class="reveal">
       <div class="eyebrow">SEC.05</div>
       <h2 class="mono" style="font-size:32px;font-weight:700;">Under the hood.</h2>
-      <p style="color:var(--dim);margin-top:10px;max-width:560px;font-size:13.5px;line-height:1.75;">Live demos of concepts I actually work with. Not decorative — real algorithms running in your browser.</p>
+      <p style="color:var(--dim);margin-top:10px;max-width:560px;font-size:13.5px;line-height:1.75;">Live execution environments for algorithms running client-side.</p>
     </div>
     <div class="int-grid">
       <div class="int-box reveal reveal-d1">
@@ -1717,13 +1717,13 @@ footer {
     <div class="reveal">
       <div class="eyebrow">SEC.06</div>
       <h2 class="mono" style="font-size:32px;font-weight:700;">Build log.</h2>
-      <p style="color:var(--dim);margin-top:10px;max-width:520px;font-size:13.5px;line-height:1.75;">Dated entries on real build decisions. Not a blog — a record. Stuff I'd want to find six months later.</p>
+      <p style="color:var(--dim);margin-top:10px;max-width:520px;font-size:13.5px;line-height:1.75;">A historical record of technical decisions and architectural revisions.</p>
     </div>
     <div class="log-entries" style="margin-top:44px;">
       <div class="log-entry reveal">
         <div class="log-date">2026-06-28</div>
         <div class="log-title">Why LOQ v2 separated UI from hardware interfaces</div>
-        <div class="log-body">v1 had a fundamental flaw — it was writing directly to ACPI sysfs via pkexec, which meant every profile switch spawned an authentication prompt that hid behind the app window. Users couldn't see it. Hardware writes silently failed. The UI froze and never recovered. That's not a UX bug. That's a trust violation. Fixed it at the root: v2 uses powerprofilesctl over D-Bus as a normal user. No pkexec. No auth prompt. Instant, reliable profile switching.</div>
+        <div class="log-body">v1 had a fundamental flaw — it was writing directly to ACPI sysfs via pkexec, which meant every profile switch spawned an authentication prompt that hid behind the app window. Users couldn't see it. Hardware writes silently failed. The UI froze and never recovered. I redesigned the execution flow: v2 uses powerprofilesctl over D-Bus as a normal user to eliminate privileged ACPI prompt timeouts.</div>
         <div class="log-tags"><span class="log-tag">LOQ Control</span><span class="log-tag">Architecture</span><span class="log-tag">systemd</span></div>
       </div>
       <div class="log-entry reveal reveal-d1">
@@ -1747,7 +1747,7 @@ footer {
       <div class="log-entry reveal reveal-d4">
         <div class="log-date">2026-05-12</div>
         <div class="log-title">ScholarSync: why batch over streaming was right for the hackathon</div>
-        <div class="log-body">Streaming Gemini through FastAPI requires SSE or WebSocket on both ends. Getting that right in a 24-hour window while also building the knowledge graph and flashcard system wasn't realistic. Batch was simpler, testable, and shipped. Tradeoff: 4-8 second wait on large queries. Post-hackathon: streaming is the obvious next step. But shipping batch and winning was better than not shipping streaming.</div>
+        <div class="log-body">Streaming Gemini through FastAPI requires SSE or WebSocket on both ends. Getting that right in a 24-hour window while also building the knowledge graph and flashcard system wasn't realistic. Batch was simpler, testable, and shipped. Tradeoff: 4-8 second wait on large queries. Post-hackathon: streaming is the obvious next step. Opting for batch allowed us to ship a stable build within the 24-hour hackathon window.</div>
         <div class="log-tags"><span class="log-tag">ScholarSync</span><span class="log-tag">FastAPI</span><span class="log-tag">Gemini</span></div>
       </div>
     </div>
@@ -2257,12 +2257,12 @@ function termExec(raw){
   const cmd=args[0]?.toLowerCase();
   const H={
     help:cmdHelp,ls:cmdLs,dir:cmdLs,cd:cmdCd,cat:cmdCat,pwd:()=>tL(cwdD()),
-    whoami:()=>tL('vaibhav — systems builder, not just a developer'),neofetch:cmdNeofetch,uname:cmdUname,
+    whoami:()=>tL('vaibhav — systems developer'),neofetch:cmdNeofetch,uname:cmdUname,
     git:cmdGit,sudo:cmdSudo,echo:()=>tL(args.slice(1).join(' ')),
     clear:()=>{out().innerHTML='';return null;},
     history:()=>{TH.slice().reverse().forEach((h,i)=>tP(`  ${String(i+1).padStart(3)}  ${h}`));},
     tree:cmdTree,ps:cmdPs,
-    uptime:()=>tL('up 3 months, 4 weeks — building, not waiting to be ready'),
+    uptime:()=>tL('up 3 months, 4 weeks — continuous deployment'),
     date:()=>tL(new Date().toString()),
     man:cmdMan,
     exit:()=>tL('No exit from this terminal. You are home.','tdim'),
