@@ -1366,6 +1366,8 @@ footer {
               <p>Ubuntu 24.04 LTS base. KDE Plasma 6 — the only DE that's actually scriptable without fighting it. XanMod kernel with BORE scheduler, BBR2 TCP. The 13 rebuilds weren't all dramatic failures. Most were boring config drift between kernel and DE that only showed after first login. The real lesson was simpler: lock your kernel minor version before you spend a week debugging display issues.</p>
               <h4>Where it is now</h4>
               <p>v1.1 "Titanium Velocity" is stable — it's my daily driver on the LOQ. v2.0 "Renaissance" is in progress: full Wayland, Rust for core tooling, GrapheneOS-style hardening, Kali sandbox in Podman.</p>
+              <h4>Recruiter Takeaways</h4>
+              <p>Demonstrates automated operating system deployment, custom kernel orchestration (XanMod/BORE), package dependency resolution, and sandboxed security configurations (via Podman/Wayland).</p>
               <h4>What I'd do differently</h4>
               <p>Write down every failure the moment it happens. I know the 13-rebuilds story by heart but I don't have the specific reasons documented. That's the part that actually matters and I lost it.</p>
             </div>
@@ -1396,6 +1398,8 @@ footer {
               <p>v1 wrote directly to ACPI sysfs through pkexec. That meant every profile switch launched an auth dialog that opened behind the main window — invisible to the user. Hardware writes would fail silently, UI would freeze, and nothing told you why. I redesigned it from scratch: v2 talks to power-profiles-daemon over D-Bus as a normal user. No root. No auth dialogs. Profile switching is instant.</p>
               <h4>What v2 actually does</h4>
               <p>Four power profiles matching the LOQ hardware buttons — Quiet, Balanced, Performance, Custom. CPU PL1/PL2 via RAPL, GPU TGP via nvidia-smi, fan curve editor rendered with Cairo. Fn+Q keyboard sync via a 1-second sysfs poll so the hardware button and the UI stay in sync. Rewrote the sensor stack to read directly from hwmon — this alone killed ~300 noisy stderr lines per minute.</p>
+              <h4>Recruiter Takeaways</h4>
+              <p>Demonstrates secure privilege separation patterns (D-Bus & Polkit over raw sudo/pkexec executions), daemon performance tuning (300+ log lines/min suppressed), Linux sysfs API consumption, and custom user interface development (Cairo-rendered graph editing).</p>
               <h4>What I learned</h4>
               <p>The difference between code that works on your machine and software someone else can rely on. Also that privilege escalation on Linux is more nuanced than just sudo — D-Bus and Polkit exist for a reason.</p>
               <div class="code-block">
@@ -1470,6 +1474,8 @@ footer {
               <p>Android build system at every layer — Soong, Make, Blueprint. How Treble-era abstractions fail on pre-Treble hardware. What "device can't be trusted" means at bootloader level, and the four different ways to address it.</p>
               <h4>Currently blocked on</h4>
               <p>Bootloader trust chain. Spent two weeks thinking this was a key signing problem. It isn't — it's a verified boot chain issue. The bootloader checks signatures on the boot image, but the OEM hash of the device tree doesn't match what LineageOS expects. Trying test key signing via avbtool first. If that fails, custom bootloader flash — risky since Motorola's tool doesn't expose enough control.</p>
+              <h4>Recruiter Takeaways</h4>
+              <p>Exhibits low-level system platform engineering, custom kernel patch application, hardware abstraction layer (HAL) integrations, firmware boot flow diagnostics (AVB debugging), and AOSP compilation tree orchestration (Soong/Make).</p>
               <div class="code-block">
                 <div class="cb-bar"><span>Android.bp</span><span class="cb-lang">AOSP Blueprint</span></div>
                 <pre class="cb-code"><span class="cm">// android_device_motorola_potter</span>
@@ -1516,6 +1522,8 @@ footer {
               <p>24-hour Google GDSC TechSprint. Decoupled from the start — Next.js 14 App Router, FastAPI, ChromaDB, Gemini 2.0 Flash. Multi-doc RAG with page-level citations, interactive knowledge graph, 3D CSS flashcards. Went with batch responses over streaming because getting SSE right in 24 hours while also building the graph and flashcard system wasn't realistic.</p>
               <h4>What I learned</h4>
               <p>How RAG actually works end to end — chunking, embeddings, retrieval, structured output. Also that citations matter more than confident-sounding answers when you're building a study tool. An AI that admits what page it got something from is more trustworthy than one that sounds sure of itself.</p>
+              <h4>Recruiter Takeaways</h4>
+              <p>Highlights structured RAG architecture pipeline execution, vector database querying (ChromaDB), structured JSON response parsing, and high-velocity product delivery under constraint (Hackathon winner).</p>
               <h4>What I'd change</h4>
               <p>Streaming from day one — the 4-8 second wait on large queries is noticeable. And the knowledge graph should let you explore nodes interactively instead of firing another LLM call. Both are on the list.</p>
               <div class="code-block">
