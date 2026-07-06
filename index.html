@@ -1078,6 +1078,7 @@ footer {
   .eyebrow { font-size: 10px; }
   #subpage-overlay { border-radius: 0; }
   #subpage-header { padding: 12px 16px; }
+  .subpage-close-btn { padding: 10px 18px; font-size: 12px; }
   #subpage-body { padding: 16px; }
   .sched-procs { gap: 6px; }
   .sp { font-size: 10px; }
@@ -2148,6 +2149,9 @@ function openSubpage(id){
   document.body.style.overflow = 'hidden';
   trapFocus(overlay);
 
+  // Push history state to handle system/browser back button natively
+  history.pushState({ subpageOpen: true }, "");
+
   // Specific initializations inside overlay context
   if(id === 'case-loq'){
     fcInit = false; // allow re-init in new SVG container inside overlay body
@@ -2155,10 +2159,12 @@ function openSubpage(id){
   }
 }
 
-function closeSubpage(){
+function closeSubpage(preventHistoryBack = false){
   const overlay = document.getElementById('subpage-overlay');
   const backdrop = document.getElementById('subpage-backdrop');
   
+  if(!overlay.classList.contains('open')) return;
+
   overlay.classList.remove('open');
   backdrop.classList.remove('active');
   document.body.style.overflow = '';
@@ -2166,7 +2172,20 @@ function closeSubpage(){
   
   // Clear trace values if any
   currentActiveProjectSource = null;
+
+  // Pop history state if closed manually
+  if(!preventHistoryBack && history.state && history.state.subpageOpen){
+    history.back();
+  }
 }
+
+// Global popstate handler to close the modal when browser back is pressed
+window.addEventListener('popstate', e => {
+  if (document.getElementById('subpage-overlay').classList.contains('open')) {
+    closeSubpage(true);
+  }
+});
+
 
 document.getElementById('filters').addEventListener('click',e=>{
   const f=e.target.closest('.flt'); if(!f) return;
