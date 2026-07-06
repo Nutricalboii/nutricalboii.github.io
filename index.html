@@ -1937,8 +1937,15 @@ if(!isLocal){
     })
     .then(function(d){
       var animCount=function(el,val){
-        if(!el) return; var cur=0;
-        var step=function(){cur=Math.min(cur+1,val); el.textContent=cur; if(cur<val) requestAnimationFrame(step);};
+        if(!el) return;
+        var startVal=0;
+        var duration=1000;
+        var start=performance.now();
+        var step=function(now){
+          var progress=Math.min((now-start)/duration,1);
+          el.textContent=Math.floor(progress*val);
+          if(progress<1) requestAnimationFrame(step);
+        };
         requestAnimationFrame(step);
       };
       animCount(document.getElementById('tel-repos'),d.public_repos||0);
@@ -2699,6 +2706,14 @@ if(hamburger&&navlinks){
       hamburger.classList.remove('open');
       hamburger.setAttribute('aria-expanded','false');
     });
+  });
+  // Auto-dismiss menu when clicking outside
+  document.addEventListener('click',e=>{
+    if(navlinks.classList.contains('open')&&!navlinks.contains(e.target)&&!hamburger.contains(e.target)){
+      navlinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+    }
   });
 }
 
